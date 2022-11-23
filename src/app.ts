@@ -6,9 +6,11 @@ const app = express();
 
 const addNumber = (a: number, b: number) : number => a+b;
 
-app.get('/',(req: Request, res: Response)=>{
+app.post('/users',(req: Request, res: Response)=>{
     let sum: number = addNumber(5,5);
-    res.send("hello ");
+    res.status(200).send("hello ");
 })
 
-app.listen(5000, ()=>{console.log("Server running")})
+//testing roman branch
+
+export default app;
