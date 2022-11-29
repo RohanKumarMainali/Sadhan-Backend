@@ -3,13 +3,11 @@ const express = require('express');
 
 import { Request, Response, NextFunction } from "express";
 const app = express();
+const router  = require('./routes/index.routes');
 
 const addNumber = (a: number, b: number) : number => a+b;
 
-app.post('/users',(req: Request, res: Response)=>{
-    let sum: number = addNumber(5,5);
-    res.status(200).send("hello ");
-})
+app.use('/api',router);
 
 //testing roman branch
 
