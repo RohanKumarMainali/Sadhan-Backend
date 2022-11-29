@@ -9,6 +9,5 @@ const addNumber = (a: number, b: number) : number => a+b;
 
 app.use('/api',router);
 
-//testing roman branch
 
 export default app;
