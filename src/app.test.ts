@@ -17,11 +17,11 @@ describe("admin login", () => {
 });
 
 describe("admin signup", () => {
-  test("should return a json object with 200 status code", async () => {
+  test("should return a json object with 409 status code for duplicate user", async () => {
     const response = await request(app).post("/api/admin/signup").send({
       username: "username",
       password: "password",
     });
-    expect(response.status).toBe(200);
+    expect(response.status).toBe(409);
   });
 });
