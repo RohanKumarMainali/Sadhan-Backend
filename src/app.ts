@@ -1,14 +1,17 @@
+// importing necessary modules
+
 const express = require('express');
 const connectDB = require('./utils/connectDB');
-
-// or use import express from 'express'
-
 import { Request, Response, NextFunction } from "express";
+
+// server config
 const app = express();
+
+// database connection
 connectDB();
 const router  = require('./routes/index.routes');
 
-const addNumber = (a: number, b: number) : number => a+b;
+// middlewares
 
 app.use('/api',router);
 
