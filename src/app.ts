@@ -11,6 +11,7 @@ const passport = require('passport');
 const app : Express = express();
 require('./config/passportSetup.ts');
 
+
 const PORT = process.env.PORT;
 // database connection
 connectDB();
