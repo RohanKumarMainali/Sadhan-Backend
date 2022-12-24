@@ -3,7 +3,7 @@
 require('dotenv').config();
 const express = require('express');
 const connectDB = require('./utils/connectDB');
-const session = require('express-session');
+const session = require('express-session')
 import {Express, Request, Response, NextFunction } from "express";
 
 const passport = require('passport');
@@ -18,6 +18,14 @@ const router  = require('./routes/index.routes');
 
 // middlewares
 app.use(express.json());
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true }
+}))
+app.use(passport.initialize());
+app.use(passport.session());
 app.use('/api',router);
 
 app.get('/dashboard',(req:Request,res:Request)=>{console.log('logged in')})
