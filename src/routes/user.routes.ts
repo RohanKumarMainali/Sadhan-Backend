@@ -1,6 +1,5 @@
 const route = require('express').Router()
 const {dashboard} = require('../controller/index.controllers').dashboard;
-//testing roman branch
 const session = require('express-session')
 import {Express, Request, Response, NextFunction } from "express";
 
@@ -18,6 +17,6 @@ route.get('/google/callback', passport.authenticate( 'google', {
         successRedirect: '/api/dashboard',
         failureRedirect: '/api/login'
 }));
-
+//test
 
 module.exports = route;
