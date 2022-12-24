@@ -6,7 +6,7 @@ const auth = require("../../../middleware/auth");
 
 const LOGIN = async (req: Request, res: Response, next: NextFunction) => {
   let { username, password } = req.body;
-
+   
   //uid validation
   if (typeof username !== "string" || typeof password !== "string") {
     return res
@@ -16,7 +16,7 @@ const LOGIN = async (req: Request, res: Response, next: NextFunction) => {
       );
   }
 
-  //database mapping
+   //database mapping
 
   try {
     const data = await adminModel.find({ username: username });

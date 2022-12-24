@@ -1,5 +1,6 @@
 const Router = require('express').Router();
 
+
 // Import user defined routes
 
 const ADMIN_ROUTES = require('./admin.routes');
