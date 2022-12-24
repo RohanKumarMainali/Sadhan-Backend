@@ -28,16 +28,5 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use('/api',router);
 
-app.get('/dashboard',(req:Request,res:Request)=>{console.log('logged in')})
-app.get('/login',(req:Request,res:Request)=> console.log('error'));
-
-app.get('/google', passport.authenticate('google',{scope:['profile','email']}, (req:Request,res:Response)=>{}))
-
-app.get('/google/callback', passport.authenticate( 'google', {
-        successRedirect: '/dashboard',
-        failureRedirect: '/login'
-}));
-
-
 app.listen(PORT, ()=>console.log(`I am running at http://localhost:${PORT}`))
 export default app;
