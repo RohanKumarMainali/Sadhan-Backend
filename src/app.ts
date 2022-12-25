@@ -4,6 +4,8 @@ require('dotenv').config();
 const express = require('express');
 const connectDB = require('./utils/connectDB');
 const session = require('express-session')
+const cookieSession = require("cookie-session");
+const cors = require('cors')
 import {Express, Request, Response, NextFunction } from "express";
 
 const passport = require('passport');
@@ -19,14 +21,13 @@ const router  = require('./routes/index.routes');
 
 // middlewares
 app.use(express.json());
-app.use(session({
-  secret: 'keyboard cat',
-  resave: false,
-  saveUninitialized: true,
-  cookie: { secure: true }
-}))
+app.use(
+  cookieSession({ name: "session", keys: ["rohan"], maxAge: 24 * 60 * 60 * 100 })
+);
+
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(cors());
 app.use('/api',router);
 
 app.listen(PORT, ()=>console.log(`I am running at http://localhost:${PORT}`))
