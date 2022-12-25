@@ -21,13 +21,23 @@ const router  = require('./routes/index.routes');
 
 // middlewares
 app.use(express.json());
+
+
+app.use(require("cors")());
+
+app.use(
+  cors({
+    origin: ["http://localhost:3000"],
+    credentials: true
+  })
+);
+
 app.use(
   cookieSession({ name: "session", keys: ["rohan"], maxAge: 24 * 60 * 60 * 100 })
 );
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(cors());
 app.use('/api',router);
 
 app.listen(PORT, ()=>console.log(`I am running at http://localhost:${PORT}`))

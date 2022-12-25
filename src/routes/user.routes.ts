@@ -9,7 +9,6 @@ const passport = require('passport');
 const CLIENT_URL = 'http://localhost:3000/';
 route.get('/dashboard',dashboard);
 
-route.get('/login',(req:Request,res:Request)=> console.log('error'));
 route.get('/login/success',(req:any,res:any)=>{
     if(req.user){
        res.status(200).json({
@@ -18,9 +17,10 @@ route.get('/login/success',(req:any,res:any)=>{
            user: req.user,
        });
     }
+    else res.status(400).send({message:'sorry'})
 })
 
-router.get("/login/failed", (req: any, res: any) => {
+route.get("/login/failed", (req: any, res: any) => {
   res.status(401).json({
     success: false,
     message: "failure",
