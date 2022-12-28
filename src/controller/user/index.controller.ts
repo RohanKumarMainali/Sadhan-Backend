@@ -1,10 +1,7 @@
- 
-import { NextFunction, Request, Response } from "express";
+const userLogin = require('./subController/Login');
+const userSignup = require('./subController/Signup');
 
-const DASHBOARD = (req: Request, res: Response, next: NextFunction) => {
- 
 // const SIGNUP = require('./subController/Signup')
-    return res.send('Logged in');
-}
 
-module.exports = {dashboard: DASHBOARD};
+
+module.exports = {login: userLogin,signup: userSignup};
