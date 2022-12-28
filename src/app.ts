@@ -1,44 +1,46 @@
 // importing necessary modules
 
-require('dotenv').config();
-const express = require('express');
-const connectDB = require('./utils/connectDB');
-const session = require('express-session')
+require("dotenv").config();
+const express = require("express");
+const connectDB = require("./utils/connectDB");
+const session = require("express-session");
 const cookieSession = require("cookie-session");
-const cors = require('cors')
-import {Express, Request, Response, NextFunction } from "express";
+const cors = require("cors");
+import { Express, Request, Response, NextFunction } from "express";
 
-const passport = require('passport');
+const passport = require("passport");
 // server config
-const app : Express = express();
-require('./config/passportSetup.ts');
-
+const app: Express = express();
+require("./config/passportSetup.ts");
 
 const PORT = process.env.PORT;
 // database connection
 connectDB();
-const router  = require('./routes/index.routes');
+const router = require("./routes/index.routes");
 
 // middlewares
 app.use(express.json());
-
 
 app.use(require("cors")());
 
 app.use(
   cors({
     origin: ["http://localhost:3000"],
-    credentials: true
+    credentials: true,
   })
 );
 
 app.use(
-  cookieSession({ name: "session", keys: ["rohan"], maxAge: 24 * 60 * 60 * 100 })
+  cookieSession({
+    name: "session",
+    keys: ["rohan"],
+    maxAge: 24 * 60 * 60 * 100,
+  })
 );
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use('/api',router);
+app.use("/api", router);
 
-app.listen(PORT, ()=>console.log(`I am running at http://localhost:${PORT}`))
+app.listen(PORT, () => console.log(`I am running at http://localhost:${PORT}`));
 export default app;
