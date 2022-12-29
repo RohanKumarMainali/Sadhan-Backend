@@ -3,12 +3,31 @@ const session = require("express-session");
 const userModel = require('../models/user.model.ts');
 import { Express, Request, Response, NextFunction } from "express";
 
+import crypto from 'crypto';
+const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
+
 // signup and login
 
 const {login,signup} = require('../controller/index.controllers').userControllers;
 route.post('/user/signup',signup);
 
 route.post('/user/login',login);
+
+
+// sessions
+
+const JWT_SECRET = "{8367E87C-B794-4A04-89DD-15FE7FDBFF78}"
+const JWT_REFRESH_SECRET = "{asdfasdfdsfa-B794-4A04-89DD-15FE7FDBFF78}"
+
+route.get('/session',async (req: any,res: any)=>{
+    const token = req.cookies.JWT_TOKEN;
+    if(token){
+        
+        const user = await validateToken(token,JWT_SECRET); 
+
+    }
+})
 
 // social auth 
 const passport = require("passport");
@@ -54,5 +73,32 @@ route.get(
   })
 );
 //test
+
+async function validateToken(token: String, secret: String) {
+    try {
+        const result  = jwt.verify(token, secret);
+      
+        return {
+            "email": result.email,
+        }
+    }
+    catch(ex){
+        return null;
+    }
+   
+  
+}
+ 
+async function randomString() {
+    return crypto.randomBytes(64).toString('hex');
+}
+function sha256(txt: any){
+    const secret = 'abcdefg';
+    const hash = crypto.createHmac('sha256', secret)
+                    .update(txt)
+                    .digest('hex');
+   return hash;
+}
+
 
 module.exports = route;

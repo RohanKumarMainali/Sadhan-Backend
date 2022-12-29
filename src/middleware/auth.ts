@@ -7,7 +7,7 @@ import { STATUS_CODES } from "http";
 
 const GENERATE_JWT = async (uid: String) => {
   const accessToken = jwt.sign({ id: uid }, process.env.ACCESS_TOKEN_KEY, {
-    expiresIn: "24h",
+    expiresIn: "30sec",
   });
   const refreshToken = jwt.sign({ id: uid }, process.env.REFRESH_TOKEN_KEY);
   return {
