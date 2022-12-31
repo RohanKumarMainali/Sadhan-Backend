@@ -30,8 +30,7 @@ route.get("/session",  (req: any, res: any) => {
         if(user ===null) res.status(400).send({success: false, message: 'token invalid or expired'})
         else res.status(200).send({success: true, message: 'token verified'})
     }
-        else res.status(400).send({success: false, message: 'no token '})
-
+        else res.status(400).send({success: false, message: 'no token ','token': token})
 });
 
 // social auth
