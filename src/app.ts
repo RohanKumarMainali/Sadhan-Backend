@@ -36,6 +36,7 @@ app.use(
     maxage: 24 * 60 * 60 * 100,
   })
 );
+
 app.use(cookieParser());
 
 app.use(passport.initialize());

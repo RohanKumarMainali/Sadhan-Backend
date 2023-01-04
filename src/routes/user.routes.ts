@@ -25,10 +25,10 @@ route.get("/session",  (req: any, res: any) => {
     console.log(token)
     const secret = process.env.ACCESS_TOKEN_KEY;
     if (token) {
-        const user =  validateToken(token, secret);
+        const user =  jwt.verify(token, secret);
         console.log('user '+user)
-        if(user ===null) res.status(400).send({success: false, message: 'token invalid or expired'})
-        else res.status(200).send({success: true, message: 'token verified'})
+        if(user == null) res.status(400).send({success: false, message: 'token invalid or expired'})
+        else res.status(200).send({success: true, message: 'token verified', 'email': user})
     }
         else res.status(400).send({success: false, message: 'no token ','token': token})
 });
@@ -79,16 +79,6 @@ route.get(
 
 //test
 
-async function validateToken(token: any, secret: any) {
-    try {
-        const result = jwt.verify(JSON.stringify(token),JSON.stringify(secret));
-        return {
-            email: result.id,
-        };
-    } catch (ex) {
-        console.log(ex)
-        return null;
-    }
-}
+
 
 module.exports = route;

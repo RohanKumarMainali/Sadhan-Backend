@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs");
 const userModel = require("../../../models/user.model");
 const { StatusCodes } = require("http-status-codes");
 const auth = require("../../../middleware/auth");
+const dayjs = require('dayjs')
 
 const login = async (req: any, res: any, next: NextFunction) => {
     let { email, password } = req.body;
@@ -43,7 +44,10 @@ const login = async (req: any, res: any, next: NextFunction) => {
 
             // add refreshToken in the user document
 
-            res.cookie('token',ACCESS_TOKEN)
+            res.cookie('token',ACCESS_TOKEN,{
+                httpOnly: true,
+                expires: dayjs().add(30,'days').toDate()
+            })
             const update = await userModel.findByIdAndUpdate(data[0]._id, {
                 token: REFRESH_TOKEN,
             });
