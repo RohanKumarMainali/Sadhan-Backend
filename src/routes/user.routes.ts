@@ -11,26 +11,36 @@ require("dotenv").config();
 // signup and login
 
 const { login, signup } =
-    require("../controller/index.controllers").userControllers;
+  require("../controller/index.controllers").userControllers;
 route.post("/user/signup", signup);
 
 route.post("/user/login", login);
 
+route.get("/logout",(req:Request,res: Response)=> {
+    //DELETING username COOKIE
+    res.clearCookie('token');
+    return res.status(200).send({"message" : "Logged out successfully!" })
+})
 // sessions
 
-const JWT_REFRESH_SECRET = "{asdfasdfdsfa-B794-4A04-89DD-15FE7FDBFF78}";
 
-route.get("/session",  (req: any, res: any) => {
-    const token = req.cookies.token;
-    console.log(token)
-    const secret = process.env.ACCESS_TOKEN_KEY;
-    if (token) {
-        const user =  jwt.verify(token, secret);
-        console.log('user '+user)
-        if(user == null) res.status(400).send({success: false, message: 'token invalid or expired'})
-        else res.status(200).send({success: true, message: 'token verified', 'email': user})
-    }
-        else res.status(400).send({success: false, message: 'no token ','token': token})
+route.get("/session", (req: any, res: any) => {
+  const token = req.cookies.token;
+  const secret = process.env.ACCESS_TOKEN_KEY;
+  if (token) {
+    const user = jwt.verify(token, secret);
+    if (user == null)
+      return res
+        .status(400)
+        .send({ success: false, message: "token invalid or expired" });
+    else
+        return res
+        .status(200)
+        .send({ success: true, message: "token verified", email: user });
+  } else
+      return res
+      .status(400)
+      .send({ success: false, message: "no token ", token: token });
 });
 
 // social auth
@@ -39,46 +49,43 @@ const passport = require("passport");
 const CLIENT_URL = "http://localhost:3000/";
 
 route.get("/login/success", (req: any, res: any) => {
-    if (req.user) {
-        res.status(200).json({
-            success: true,
-            message: "successfull",
-            user: req.user,
-        });
-    } else res.status(400).send({ message: "sorry" });
+  if (req.user) {
+    res.status(200).json({
+      success: true,
+      message: "successfull",
+      user: req.user,
+    });
+  } else res.status(400).send({ message: "sorry" });
 });
 
 route.get("/login/failed", (req: any, res: any) => {
-    res.status(401).json({
-        success: false,
-        message: "failure",
-    });
+  res.status(401).json({
+    success: false,
+    message: "failure",
+  });
 });
 
 route.get("/logout", (req: any, res: any) => {
-    req.logout();
-    res.redirect(CLIENT_URL);
+  req.logout();
+  res.redirect(CLIENT_URL);
 });
 
 route.get(
-    "/google",
-    passport.authenticate(
-        "google",
-        { scope: ["profile", "email"] },
-        (req: Request, res: Response) => { }
-    )
+  "/google",
+  passport.authenticate(
+    "google",
+    { scope: ["profile", "email"] },
+    (req: Request, res: Response) => {}
+  )
 );
 
 route.get(
-    "/google/callback",
-    passport.authenticate("google", {
-        successRedirect: CLIENT_URL,
-        failureRedirect: "/login/failed",
-    })
+  "/google/callback",
+  passport.authenticate("google", {
+    successRedirect: CLIENT_URL,
+    failureRedirect: "/login/failed",
+  })
 );
-
-//test
-
 
 
 module.exports = route;
