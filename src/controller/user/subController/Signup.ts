@@ -30,7 +30,7 @@ const SIGNUP = async (req: Request, res: Response) => {
           .then(() => {
             return res
               .status(StatusCodes.CREATED)
-              .send("user created succesfully !!");
+              .send({message: 'user created successfully'});
           })
           .catch((err: any) => {
             return res

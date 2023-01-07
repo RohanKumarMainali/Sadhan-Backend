@@ -12,17 +12,18 @@ require("dotenv").config();
 
 const { login, signup } =
   require("../controller/index.controllers").userControllers;
+
 route.post("/user/signup", signup);
 
 route.post("/user/login", login);
 
-route.get("/logout",(req:Request,res: Response)=> {
-    //DELETING username COOKIE
-    res.clearCookie('token');
-    return res.status(200).send({"message" : "Logged out successfully!" })
-})
-// sessions
 
+route.get("/user/logout", (req: Request, res: Response) => {
+  //DELETING  COOKIE
+  res.clearCookie("token");
+  return res.status(200).send({ message: "Logged out successfully!" });
+});
+// sessions
 
 route.get("/session", (req: any, res: any) => {
   const token = req.cookies.token;
@@ -34,11 +35,11 @@ route.get("/session", (req: any, res: any) => {
         .status(400)
         .send({ success: false, message: "token invalid or expired" });
     else
-        return res
+      return res
         .status(200)
         .send({ success: true, message: "token verified", email: user });
   } else
-      return res
+    return res
       .status(400)
       .send({ success: false, message: "no token ", token: token });
 });
@@ -55,7 +56,7 @@ route.get("/login/success", (req: any, res: any) => {
       message: "successfull",
       user: req.user,
     });
-  } else res.status(400).send({ message: "sorry" });
+  } else res.status(400).send({ message: "login failed" });
 });
 
 route.get("/login/failed", (req: any, res: any) => {
@@ -66,6 +67,8 @@ route.get("/login/failed", (req: any, res: any) => {
 });
 
 route.get("/logout", (req: any, res: any) => {
+
+    res.clearCookie("session");
   req.logout();
   res.redirect(CLIENT_URL);
 });
@@ -86,6 +89,5 @@ route.get(
     failureRedirect: "/login/failed",
   })
 );
-
 
 module.exports = route;
