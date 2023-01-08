@@ -6,6 +6,7 @@ import { Express, Request, Response, NextFunction } from "express";
 import crypto from "crypto";
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const atob = require('atob')
 require("dotenv").config();
 
 // signup and login
@@ -16,7 +17,6 @@ const { login, signup } =
 route.post("/user/signup", signup);
 
 route.post("/user/login", login);
-
 
 route.get("/user/logout", (req: Request, res: Response) => {
   //DELETING  COOKIE
@@ -30,14 +30,20 @@ route.get("/session", (req: any, res: any) => {
   const secret = process.env.ACCESS_TOKEN_KEY;
   if (token) {
     const user = jwt.verify(token, secret);
+
     if (user == null)
       return res
         .status(400)
         .send({ success: false, message: "token invalid or expired" });
-    else
+    else {
+        // decode payload from token
+        let base64URL = token.split('.')[1];
+        console.log(base64URL)
+        let decodedPayload = JSON.parse(atob(base64URL));
       return res
         .status(200)
-        .send({ success: true, message: "token verified", email: user });
+        .send({ success: true, message: "token verified", payload: decodedPayload });
+    }
   } else
     return res
       .status(400)
@@ -67,8 +73,7 @@ route.get("/login/failed", (req: any, res: any) => {
 });
 
 route.get("/logout", (req: any, res: any) => {
-
-    res.clearCookie("session");
+  res.clearCookie("session");
   req.logout();
   res.redirect(CLIENT_URL);
 });
