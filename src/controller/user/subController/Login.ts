@@ -50,6 +50,11 @@ const login = async (req: any, res: any, next: NextFunction) => {
         httpOnly: true,
         expires: dayjs().add(30, "days").toDate(),
       });
+
+      res.cookie("refreshToken", REFRESH_TOKEN, {
+        httpOnly: true,
+        expires: dayjs().add(30, "days").toDate(),
+      });
       const update = await userModel.findByIdAndUpdate(data[0]._id, {
         token: REFRESH_TOKEN,
       });
@@ -62,8 +67,6 @@ const login = async (req: any, res: any, next: NextFunction) => {
             email: email,
             firstName: data[0].firstName,
             lastName: data[0].lastName,
-            accessToken: ACCESS_TOKEN,
-            refreshToken: REFRESH_TOKEN,
           });
         });
       } catch (err) {
