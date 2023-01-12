@@ -5,13 +5,13 @@ import { STATUS_CODES } from "http";
 
 // generate refresh token and access token
 
-const GENERATE_JWT = async ( payload : any) => {
-    console.log('payload '+ JSON.stringify(payload))
-    
+const GENERATE_JWT = async (payload: any) => {
+  console.log("payload " + JSON.stringify(payload));
+
   const accessToken = await jwt.sign(payload, process.env.ACCESS_TOKEN_KEY, {
-    expiresIn: "5min",
+    expiresIn: "1min",
   });
-  const refreshToken = jwt.sign( payload, process.env.REFRESH_TOKEN_KEY);
+  const refreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN_KEY , {expiresIn : '1y'});
   return {
     ACCESS_TOKEN: accessToken,
     REFRESH_TOKEN: refreshToken,
