@@ -3,15 +3,17 @@ const session = require("express-session");
 const userModel = require("../models/user.model.ts");
 import { Express, Request, Response, NextFunction } from "express";
 
+const dayjs = require("dayjs");
 import crypto from "crypto";
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const atob = require('atob')
+const atob = require("atob");
+const auth = require("../middleware/auth");
 require("dotenv").config();
 
 // signup and login
 
-const { login, signup } =
+const { login, refreshToken, signup } =
   require("../controller/index.controllers").userControllers;
 
 route.post("/user/signup", signup);
@@ -21,33 +23,105 @@ route.post("/user/login", login);
 route.get("/user/logout", (req: Request, res: Response) => {
   //DELETING  COOKIE
   res.clearCookie("token");
+  res.clearCookie("refreshToken");
   return res.status(200).send({ message: "Logged out successfully!" });
 });
+
+route.post("/renewToken", async (req: any, res: any) => {
+  const refreshToken = req.body.refreshToken;
+  if (!refreshToken)
+    return res.status(403).send({ message: "User not authenticated" });
+  else {
+    try {
+      const secret = process.env.REFRESH_TOKEN_KEY;
+      const user = jwt.verify(refreshToken, secret);
+      if (user == null)
+        return res
+          .status(400)
+          .send({ success: false, message: "token invalid or expired" });
+      else {
+        // decode payload from token
+        let base64URL = refreshToken.split(".")[1];
+        let decodedPayload = JSON.parse(atob(base64URL));
+        const { id, firstName, lastName, email, role } = decodedPayload;
+        const payload = { id, firstName, lastName, email, role };
+        const { ACCESS_TOKEN, REFRESH_TOKEN } = await auth.GENERATE_JWT(
+          payload
+        );
+
+        // replace old refresh token with new one in db
+
+        const update = await userModel.findByIdAndUpdate(payload.id, {
+          token: REFRESH_TOKEN,
+        });
+
+        update.save();
+
+        // add refreshToken in the user document
+
+        res.cookie("token", ACCESS_TOKEN, {
+          httpOnly: true,
+          expires: dayjs().add(30, "days").toDate(),
+        });
+
+        res.cookie("refreshToken", REFRESH_TOKEN, {
+          httpOnly: true,
+          expires: dayjs().add(30, "days").toDate(),
+        });
+
+        return res
+          .status(200)
+          .send({ message: "token refreshed!",payload: payload, accessToken: ACCESS_TOKEN });
+      }
+    } catch (err) {
+      return res.status(400).send(err);
+    }
+  }
+});
+
 // sessions
 
 route.get("/session", (req: any, res: any) => {
   const token = req.cookies.token;
   const secret = process.env.ACCESS_TOKEN_KEY;
-  if (token) {
-    const user = jwt.verify(token, secret);
+  try {
+    if (token) {
+      const user = jwt.verify(token, secret);
 
-    if (user == null)
+      if (user == null)
+        return res
+          .status(400)
+          .send({ success: false, message: "token invalid or expired" });
+      else {
+        // decode payload from token
+        let base64URL = token.split(".")[1];
+        console.log(base64URL);
+        let decodedPayload = JSON.parse(atob(base64URL));
+        return res.status(200).send({
+          success: true,
+          message: "token verified",
+          payload: decodedPayload,
+        });
+      }
+    } else
       return res
         .status(400)
-        .send({ success: false, message: "token invalid or expired" });
-    else {
-        // decode payload from token
-        let base64URL = token.split('.')[1];
-        console.log(base64URL)
-        let decodedPayload = JSON.parse(atob(base64URL));
-      return res
-        .status(200)
-        .send({ success: true, message: "token verified", payload: decodedPayload });
-    }
-  } else
-    return res
-      .status(400)
-      .send({ success: false, message: "no token ", token: token });
+        .send({ success: false, message: "no token ", token: token });
+  } catch (error: any) {
+    return res.status(401).send(error.message);
+  }
+});
+
+// get token from cookies
+
+route.get("/token", (req: any, res: any) => {
+  const token = req.cookies.token;
+  const refreshToken = req.cookies.refreshToken;
+  if (!token || !refreshToken)
+    return res.status(401).send({ message: "No token" });
+  return res
+    .status(200)
+    .send({ accessToken: token, refreshToken: refreshToken });
 });
 
 // social auth
