@@ -13,12 +13,17 @@ require("dotenv").config();
 
 // signup and login
 
-const { login, refreshToken, signup } =
+const { login, refreshToken, signup , forgotPassword, forgotPasswordEmail} =
   require("../controller/index.controllers").userControllers;
 
 route.post("/user/signup", signup);
 
 route.post("/user/login", login);
+
+// forgot password
+//
+route.post('/user/forgotPassword',forgotPasswordEmail);
+route.post('/user/forgotPassword/:id/:token',forgotPassword)
 
 route.get("/user/logout", (req: Request, res: Response) => {
   //DELETING  COOKIE
@@ -69,9 +74,11 @@ route.post("/renewToken", async (req: any, res: any) => {
           expires: dayjs().add(30, "days").toDate(),
         });
 
-        return res
-          .status(200)
-          .send({ message: "token refreshed!",payload: payload, accessToken: ACCESS_TOKEN });
+        return res.status(200).send({
+          message: "token refreshed!",
+          payload: payload,
+          accessToken: ACCESS_TOKEN,
+        });
       }
     } catch (err) {
       return res.status(400).send(err);
