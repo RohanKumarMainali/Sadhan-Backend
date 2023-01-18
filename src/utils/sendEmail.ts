@@ -1,6 +1,11 @@
 const nodeMailer = require("nodemailer");
 
-const sendEmail = async (options: any) => {
+interface mailTemplate{
+    email: string,
+    subject: string,
+    message: any
+}
+const sendEmail = async (options: mailTemplate) => {
   const transporter = nodeMailer.createTransport({
     host: 'smtp.gmail.com',
     port: 465,
