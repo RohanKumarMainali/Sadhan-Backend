@@ -13,17 +13,20 @@ require("dotenv").config();
 
 // signup and login
 
-const { login, refreshToken, signup , forgotPassword, forgotPasswordEmail} =
+const { login, refreshToken, signup, changePassword,forgotPassword, forgotPasswordEmail } =
   require("../controller/index.controllers").userControllers;
 
 route.post("/user/signup", signup);
 
 route.post("/user/login", login);
 
+// change password
+route.post('/user/changePassword',changePassword)
+
 // forgot password
 //
-route.post('/user/forgotPassword',forgotPasswordEmail);
-route.post('/user/forgotPassword/:id/:token',forgotPassword)
+route.post("/user/forgotPassword", forgotPasswordEmail);
+route.post("/user/forgotPassword/:id/:token", forgotPassword);
 
 route.get("/user/logout", (req: Request, res: Response) => {
   //DELETING  COOKIE
