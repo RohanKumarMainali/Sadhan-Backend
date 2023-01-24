@@ -49,6 +49,7 @@ passport.use(new googleStrategy({
     const ACCESS_TOKEN =  jwt.sign(user,process.env.ACCESS_TOKEN_KEY,{expiresIn: '15min'});
     const REFRESH_TOKEN =  jwt.sign(user,process.env.REFRESH_TOKEN_KEY,{expiresIn: '15min'});
 
+    
     return done(null,user);
  }
 ))
