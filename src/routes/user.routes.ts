@@ -13,15 +13,21 @@ require("dotenv").config();
 
 // signup and login
 
-const { login, refreshToken, signup, changePassword,forgotPassword, forgotPasswordEmail } =
-  require("../controller/index.controllers").userControllers;
+const {
+  login,
+  refreshToken,
+  signup,
+  changePassword,
+  forgotPassword,
+  forgotPasswordEmail,
+} = require("../controller/index.controllers").userControllers;
 
 route.post("/user/signup", signup);
 
 route.post("/user/login", login);
 
 // change password
-route.post('/user/changePassword',changePassword)
+route.post("/user/changePassword", changePassword);
 
 // forgot password
 //
@@ -176,7 +182,6 @@ route.get(
   passport.authenticate("google", {
     successRedirect: CLIENT_URL,
     failureRedirect: "/login/failed",
-  })
-);
+  }));
 
 module.exports = route;
