@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema({
     email: 'string',
     password: 'string',
     token: 'string',
+    status: String,
     createdOn: Date,
 })
 
