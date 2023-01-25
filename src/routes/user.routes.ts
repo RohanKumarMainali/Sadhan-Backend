@@ -189,4 +189,7 @@ route.get(
 // get all user
 route.get('/getUser',getUser);
 
+// get single user by id
+route.get('/getUser/:id',getUser);
+
 module.exports = route;
