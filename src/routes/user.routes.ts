@@ -20,6 +20,7 @@ const {
   changePassword,
   forgotPassword,
   forgotPasswordEmail,
+  getUser,
 } = require("../controller/index.controllers").userControllers;
 
 route.post("/user/signup", signup);
@@ -182,6 +183,10 @@ route.get(
   passport.authenticate("google", {
     successRedirect: CLIENT_URL,
     failureRedirect: "/login/failed",
-  }));
+  })
+);
+
+// get all user
+route.get('/getUser',getUser);
 
 module.exports = route;

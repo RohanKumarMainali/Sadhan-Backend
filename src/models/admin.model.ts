@@ -3,7 +3,9 @@ const bcryptjs = require("bcryptjs");
 
 // create schema
 const adminSchema = new mongoose.Schema({
-    username: String,
+    email: String,
+    firstName: String,
+    lastName: String,
     password: String,
     createdOn: Date,
 });

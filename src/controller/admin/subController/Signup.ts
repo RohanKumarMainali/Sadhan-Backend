@@ -3,21 +3,24 @@ const bcrypt = require("bcryptjs");
 const adminModel = require("../../../models/admin.model");
 const { StatusCodes } = require("http-status-codes");
 
+
 const SIGNUP = async (req: Request, res: Response) => {
-  let { username, password } = req.body;
+  let { firstName, lastName,email, password } = req.body;
 
   // encrypt the password
   password = await bcrypt.hash(password, 10);
 
   //search if user already exists ?
   adminModel
-    .find({ username: username })
+    .find({ email:email })
     .then((data: any) => {
       if (data.length === 0) {
         //insert new admin data
 
         const data = new adminModel({
-          username: username,
+          firstName: firstName,
+          lastName: lastName,
+          email:email,
           password: password,
           createdOn: new Date().toDateString(),
         });
@@ -28,7 +31,7 @@ const SIGNUP = async (req: Request, res: Response) => {
           .then(() => {
             return res
               .status(StatusCodes.CREATED)
-              .send("Admin created succesfully !!");
+              .send({message: 'user created successfully'});
           })
           .catch((err: any) => {
             return res
