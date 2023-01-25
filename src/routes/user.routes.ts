@@ -21,6 +21,7 @@ const {
   forgotPassword,
   forgotPasswordEmail,
   getUser,
+  deleteUser
 } = require("../controller/index.controllers").userControllers;
 
 route.post("/user/signup", signup);
@@ -191,5 +192,9 @@ route.get('/getUser',getUser);
 
 // get single user by id
 route.get('/getUser/:id',getUser);
+
+// delete user by id
+
+route.delete('/deleteUser/:id',deleteUser)
 
 module.exports = route;
