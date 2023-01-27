@@ -41,8 +41,16 @@ const login = async (req: any, res: any, next: NextFunction) => {
       }
 
       const payload = data[0];
-      const jwtPayload = {id: payload._id, firstName : payload.firstName, lastName: payload.lastName, email: email, role: 'user'}  
-      const { ACCESS_TOKEN, REFRESH_TOKEN } = await auth.GENERATE_JWT(jwtPayload);
+      const jwtPayload = {
+        id: payload._id,
+        firstName: payload.firstName,
+        lastName: payload.lastName,
+        email: email,
+        role: "user",
+      };
+      const { ACCESS_TOKEN, REFRESH_TOKEN } = await auth.GENERATE_JWT(
+        jwtPayload
+      );
 
       // add refreshToken in the user document
 

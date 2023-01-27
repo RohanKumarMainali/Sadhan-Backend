@@ -1,4 +1,5 @@
 const userModel = require("../../../models/user.model");
+const adminModel = require("../../../models/admin.model");
 const jwt = require("jsonwebtoken");
 const sendEmail = require("../../../utils/sendEmail");
 import { Request, Response } from "express";
