@@ -6,7 +6,9 @@ const connectDB = require("./utils/connectDB");
 const session = require("express-session");
 const cookieSession = require("cookie-session");
 const cors = require("cors");
+const bodyParser = require('body-parser')
 const cookieParser = require("cookie-parser");
+const fileUpload = require('express-fileupload')
 import { Express, Request, Response, NextFunction } from "express";
 
 const passport = require("passport");
@@ -21,6 +23,7 @@ const router = require("./routes/index.routes");
 
 // middlewares
 app.use(express.json());
+app.use(bodyParser.json());
 
 app.use(
   cors({
@@ -36,6 +39,7 @@ app.use(
     maxage: 24 * 60 * 60 * 100,
   })
 );
+app.use(fileUpload({useTempFiles: true}))
 
 app.use(cookieParser());
 
