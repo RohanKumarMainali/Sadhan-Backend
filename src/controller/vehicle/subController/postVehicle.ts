@@ -24,7 +24,6 @@ const postVehicle = async (req: any, res: Response, next: NextFunction) => {
 
     const insuranceImage = req.files.insuranceImage;
     const bluebookImage = req.files.bluebookImage;
-    let carImages: Array<imageType> = [];
 
     const uploadPromises = images.map(async (image: any) => {
       const result = await cloudinary.uploader.upload(
