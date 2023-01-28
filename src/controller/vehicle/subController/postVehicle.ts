@@ -1,7 +1,10 @@
 const vehicleModel = require("../../../models/vehicle.model");
 import { NextFunction, Request, Response } from "express";
 const cloudinary = require("../../../utils/cloudinary");
-
+interface imageType {
+  public_id: string;
+  url: string;
+}
 const postVehicle = async (req: any, res: Response, next: NextFunction) => {
   const {
     ownerId,
@@ -17,20 +20,26 @@ const postVehicle = async (req: any, res: Response, next: NextFunction) => {
 
   try {
     // image -- process
-    const image = req?.files?.image;
-    console.log(req.files);
-    console.log("image" + image);
+    const images = req?.files?.image;
+
     const insuranceImage = req.files.insuranceImage;
     const bluebookImage = req.files.bluebookImage;
-    const carImageResponse = await cloudinary.uploader.upload(
-      image.tempFilePath,
-      { folder: "car_images" },
-      function (err: any, success: any) {
-        if (err) {
-          console.log(err);
+    let carImages: Array<imageType> = [];
+
+    const uploadPromises = images.map(async (image: any) => {
+      const result = await cloudinary.uploader.upload(
+        image.tempFilePath,
+        { folder: "car_images" },
+        function (err: any, success: any) {
+          if (err) {
+            console.log(err);
+          }
         }
-      }
-    );
+      );
+      return {public_id:result.public_id, url:result.secure_url};
+    });
+    const results = await Promise.all(uploadPromises);
+
     const insuranceImageResponse = await cloudinary.uploader.upload(
       bluebookImage.tempFilePath,
       { folder: "bluebook_images" },
@@ -63,10 +72,7 @@ const postVehicle = async (req: any, res: Response, next: NextFunction) => {
       description,
       status: false,
       createdOn: new Date().toString(),
-      image: {
-        public_id: carImageResponse.public_id,
-        url: carImageResponse.secure_url,
-      },
+      carImages: results,
       insuranceImage: {
         public_id: insuranceImageResponse.public_id,
         url: insuranceImageResponse.secure_url,
@@ -79,8 +85,8 @@ const postVehicle = async (req: any, res: Response, next: NextFunction) => {
 
     await response.save();
     return res
-      .status(200)
-      .send({ success: true, message: "Vehicle posted successfully!" });
+      .status(201)
+      .send({ success: true, message: "Vehicle posted successfully!" ,response});
   } catch (error) {
     next(error);
   }

@@ -8,10 +8,7 @@ const vehicleModel = new mongoose.Schema({
     model: String,
     milage: String,
     seat: String,
-    image: {
-        public_id: String,
-        url: String
-    },
+    carImages: Array,
     vehicleNumber: String,
     location: String,
     description: String,
