@@ -5,10 +5,11 @@ const getVehicle = require('../controller/vehicle/index.controller.ts').getVehic
 const deleteVehicle = require('../controller/vehicle/index.controller.ts').deleteVehicle
 const updateVehicle = require('../controller/vehicle/index.controller.ts').updateVehicle
 
-vehicleRoute.post('/postVehicle',postVehicle)
-vehicleRoute.get('/getVehicle',getVehicle)
-vehicleRoute.delete('/deleteVehicle/:id',deleteVehicle)
-vehicleRoute.put('/updateVehicle/:id',updateVehicle)
+vehicleRoute.post('/postVehicle', postVehicle)
+vehicleRoute.get('/getVehicle', getVehicle)
+vehicleRoute.get('/getVehicle/:id', getVehicle)
+vehicleRoute.delete('/deleteVehicle/:id', deleteVehicle)
+vehicleRoute.put('/updateVehicle/:id', updateVehicle)
 
 
 module.exports = vehicleRoute

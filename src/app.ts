@@ -26,20 +26,20 @@ app.use(express.json());
 app.use(bodyParser.json());
 
 app.use(
-  cors({
-    origin: ["http://localhost:3000"],
-    credentials: true,
-  })
+    cors({
+        origin: ["http://localhost:3000"],
+        credentials: true,
+    })
 );
 
 app.use(
-  cookieSession({
-    name: "session",
-    keys: ["rohan"],
-    maxage: 24 * 60 * 60 * 100,
-  })
+    cookieSession({
+        name: "session",
+        keys: ["rohan"],
+        maxage: 24 * 60 * 60 * 100,
+    })
 );
-app.use(fileUpload({useTempFiles: true}))
+app.use(fileUpload({ useTempFiles: true }))
 
 app.use(cookieParser());
 
