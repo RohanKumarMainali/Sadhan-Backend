@@ -63,6 +63,7 @@ const postVehicle = async (req: any, res: Response, next: NextFunction) => {
                     url: result.secure_url,
 
                 }
+
             }
 
         }
