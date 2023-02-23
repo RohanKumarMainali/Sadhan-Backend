@@ -1,6 +1,7 @@
 const route = require("express").Router();
 const session = require("express-session");
 const userModel = require("../models/user.model.ts");
+const adminModel = require("../models/admin.model.ts");
 import { Express, Request, Response, NextFunction } from "express";
 
 const dayjs = require("dayjs");
@@ -66,10 +67,17 @@ route.post("/renewToken", async (req: any, res: any) => {
                 );
 
                 // replace old refresh token with new one in db
+                let update;
+                if (role === 'user') {
+                    update = await userModel.findByIdAndUpdate(payload.id, {
+                        token: REFRESH_TOKEN,
+                    });
+                } else if (role == 'admin') {
+                    update = await adminModel.findByIdAndUpdate(payload.id, {
+                        token: REFRESH_TOKEN,
+                    });
 
-                const update = await userModel.findByIdAndUpdate(payload.id, {
-                    token: REFRESH_TOKEN,
-                });
+                }
 
                 res.clearCookie("token");
                 res.clearCookie("refreshToken");
