@@ -10,9 +10,9 @@ const adminSchema = new mongoose.Schema({
     createdOn: Date,
 });
 // match password method
-adminSchema.methods.matchPassword = async function (password : String){
-    return await bcryptjs.compare(password,this.password)
+adminSchema.methods.matchPassword = async function(password: String) {
+    return await bcryptjs.compare(password, this.password)
 }
 
 // create model and export
-module.exports = mongoose.model("admins",adminSchema);
+module.exports = mongoose.model("admins", adminSchema);
