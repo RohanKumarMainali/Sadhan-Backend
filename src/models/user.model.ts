@@ -8,13 +8,14 @@ const userSchema = new mongoose.Schema({
     email: 'string',
     password: 'string',
     token: 'string',
+    kyc: Object,
     status: String,
     createdOn: Date,
 })
 
-userSchema.methods.matchPassword = async function (password : String){
-    return await bcryptjs.compare(password,this.password)
+userSchema.methods.matchPassword = async function(password: String) {
+    return await bcryptjs.compare(password, this.password)
 }
 
 
-module.exports = mongoose.model("users",userSchema)
+module.exports = mongoose.model("users", userSchema)
