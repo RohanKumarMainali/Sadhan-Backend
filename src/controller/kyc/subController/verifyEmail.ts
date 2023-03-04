@@ -1,7 +1,6 @@
 
 const userModel = require("../../../models/user.model");
 const adminModel = require("../../../models/admin.model");
-const jwt = require("jsonwebtoken");
 const otpGenerator = require('otp-generator')
 const sendEmail = require("../../../utils/sendEmail");
 import { NextFunction, Request, Response } from "express";
@@ -37,7 +36,7 @@ const verifyEmail = async (req: Request, res: Response, next: NextFunction) => {
     try {
         if (id) {
             const response = await userModel.findByIdAndUpdate(id, {
-                email: 'verified',
+                emailVerified: 'verified'
             })
             response.save();
             return res.status(200).send({ message: 'Email verified successfully!' })

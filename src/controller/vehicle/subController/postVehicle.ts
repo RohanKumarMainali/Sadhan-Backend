@@ -20,53 +20,25 @@ const postVehicle = async (req: any, res: Response, next: NextFunction) => {
 
     try {
         // image -- process
-        const images = req?.files?.images;
+        const images = req?.files?.image;
 
         const insuranceImage = req.files.insuranceImage;
         const bluebookImage = req.files.bluebookImage;
 
-
-
-        // for multiple images
-        //
-        let results: any;
-        try {
-            const uploadPromises = images.map(async (image: any) => {
-                const result = await cloudinary.uploader.upload(
-                    image.tempFilePath,
-                    { folder: "car_images" },
-                    function(err: any, success: any) {
-                        if (err) {
-                            console.log(err);
-                        }
+        const uploadPromises = images.map(async (image: any) => {
+            const result = await cloudinary.uploader.upload(
+                image.tempFilePath,
+                { folder: "car_images" },
+                function(err: any, success: any) {
+                    if (err) {
+                        console.log(err);
                     }
-                );
-                return { public_id: result.public_id, url: result.secure_url };
-            });
-            results = await Promise.all(uploadPromises);
-
-
-        } catch (error: any) {
-            if (error.message == 'images.map is not a function') {
-                const result = await cloudinary.uploader.upload(
-                    images.tempFilePath,
-                    { folder: "car_images" },
-                    function(err: any, success: any) {
-                        if (err) {
-                            console.log(err);
-                        }
-                    }
-                );
-
-                results = {
-                    public_id: result.public_id,
-                    url: result.secure_url,
-
                 }
+            );
+            return { public_id: result.public_id, url: result.secure_url };
+        });
+        const results = await Promise.all(uploadPromises);
 
-            }
-
-        }
         const insuranceImageResponse = await cloudinary.uploader.upload(
             bluebookImage.tempFilePath,
             { folder: "bluebook_images" },
