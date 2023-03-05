@@ -10,6 +10,7 @@ const userSchema = new mongoose.Schema({
     token: 'string',
     emailVerified: 'string',
     phoneNumberVerified: 'string',
+    otp: 'string',
     kyc: Object,
     status: String,
     createdOn: Date,
