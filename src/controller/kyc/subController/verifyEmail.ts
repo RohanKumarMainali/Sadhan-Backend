@@ -6,16 +6,21 @@ const sendEmail = require("../../../utils/sendEmail");
 import { NextFunction, Request, Response } from "express";
 
 const sendEmailOTP = async (req: Request, res: Response) => {
-    const { email } = req.body;
+
+    const { email, id } = req.body;
     if (email) {
         try {
             // try finding the user with the email
             const user = await userModel.findOne({ email: email });
             if (user) {
+
                 // generate otp
                 const OTP = otpGenerator.generate(6, { upperCaseAlphabets: false, specialChars: false });
                 const message = `Please verify your email using this OTP :- \n\n ${OTP} \n\n If you have not requested this email then, please ignore it.`;
 
+                // save otp in database to verify later 
+                const otpResponse = await userModel.findByIdAndUpdate(id, { otp: OTP })
+                await otpResponse.save();
                 await sendEmail({
                     email: email,
                     subject: "Email Verification with OTP",
