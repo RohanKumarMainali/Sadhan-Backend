@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema({
     phoneNumberVerified: 'string',
     otp: 'string',
     kyc: Object,
-    status: String,
+    status: 'string',
     createdOn: Date,
 })
 
