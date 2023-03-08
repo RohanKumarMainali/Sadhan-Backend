@@ -78,7 +78,7 @@ const postKYC = async (req: any, res: Response, next: NextFunction) => {
   }
 };
 
-const verifyKyc = async (req: Request, res: Response, next: NextFunction) => {
+const approveKyc = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.body;
     const response = await userModel.findByIdAndUpdate(id, {
@@ -101,10 +101,10 @@ const viewKycRequest = async (req: Request, res: Response, next: NextFunction) =
     console.log(response)
     return res
       .status(200)
-      .send({ data: response.data });
+      .send({ data: response});
   } catch (error: any) {
     return res.status(400).send({ message: error.message });
   }
 };
 
-module.exports = { postKYC, verifyKyc , viewKycRequest};
+module.exports = { postKYC, approveKyc , viewKycRequest};
