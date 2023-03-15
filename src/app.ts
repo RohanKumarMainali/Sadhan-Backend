@@ -32,6 +32,8 @@ app.use(
     })
 );
 
+app.use(cors())
+
 app.use(
     cookieSession({
         name: "session",
