@@ -37,6 +37,19 @@ route.post("/user/changePassword", changePassword);
 route.post("/user/forgotPassword", forgotPasswordEmail);
 route.post("/user/forgotPassword/:id/:token", forgotPassword);
 
+
+
+// get all user
+route.get("/getUser", getUser);
+
+// get single user by id
+route.get("/getUser/:id", getUser);
+
+// delete user by id
+
+route.delete("/deleteUser/:id", deleteUser);
+
+
 route.get("/user/logout", (req: Request, res: Response) => {
     //DELETING  COOKIE
     res.clearCookie("token");
@@ -44,7 +57,7 @@ route.get("/user/logout", (req: Request, res: Response) => {
     return res.status(200).send({ message: "Logged out successfully!" });
 });
 
-route.post("/renewToken", async (req: any, res: any) => {
+route.post("/renewToken", async (req: Request, res: Response) => {
     const refreshToken = req.body.refreshToken;
     if (!refreshToken)
         return res.status(403).send({ message: "User not authenticated" });
@@ -58,8 +71,8 @@ route.post("/renewToken", async (req: any, res: any) => {
                     .send({ success: false, message: "token invalid or expired" });
             else {
                 // decode payload from token
-                let base64URL = refreshToken.split(".")[1];
-                let decodedPayload = JSON.parse(atob(base64URL));
+                const base64URL = refreshToken.split(".")[1];
+                const decodedPayload = JSON.parse(atob(base64URL));
                 const { id, firstName, lastName, email, role } = decodedPayload;
                 const payload = { id, firstName, lastName, email, role };
                 const { ACCESS_TOKEN, REFRESH_TOKEN } = await auth.GENERATE_JWT(
@@ -108,7 +121,7 @@ route.post("/renewToken", async (req: any, res: any) => {
 
 // sessions
 
-route.get("/session", (req: any, res: any) => {
+route.get("/session", (req: Request, res: Response) => {
     const token = req.cookies.token;
     const secret = process.env.ACCESS_TOKEN_KEY;
     try {
@@ -121,8 +134,8 @@ route.get("/session", (req: any, res: any) => {
                     .send({ success: false, message: "token invalid or expired" });
             else {
                 // decode payload from token
-                let base64URL = token.split(".")[1];
-                let decodedPayload = JSON.parse(atob(base64URL));
+                const base64URL = token.split(".")[1];
+                const decodedPayload = JSON.parse(atob(base64URL));
                 return res.status(200).send({
                     success: true,
                     message: "token verified",
@@ -140,7 +153,7 @@ route.get("/session", (req: any, res: any) => {
 
 // get token from cookies
 
-route.get("/token", (req: any, res: any) => {
+route.get("/token", (req: Request, res: Response) => {
     const token = req.cookies.token;
     const refreshToken = req.cookies.refreshToken;
     if (!token || !refreshToken)
@@ -155,7 +168,7 @@ const passport = require("passport");
 
 const CLIENT_URL = "http://localhost:3000/";
 
-route.get("/login/success", (req: any, res: any) => {
+route.get("/login/success", (req: any, res: Response) => {
     if (req.user) {
         res.status(200).json({
             success: true,
@@ -194,15 +207,4 @@ route.get(
         failureRedirect: "/login/failed",
     })
 );
-
-// get all user
-route.get("/getUser", getUser);
-
-// get single user by id
-route.get("/getUser/:id", getUser);
-
-// delete user by id
-
-route.delete("/deleteUser/:id", deleteUser);
-
 module.exports = route;
