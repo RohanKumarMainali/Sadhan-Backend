@@ -1,13 +1,15 @@
 const vehicleModel = require("../../../models/vehicle.model");
 import { NextFunction, Request, Response } from "express";
+import mongoose from 'mongoose'
 const cloudinary = require("../../../utils/cloudinary");
+
 interface imageType {
     public_id: string;
     url: string;
 }
 const postVehicle = async (req: any, res: Response, next: NextFunction) => {
     const {
-        ownerId,
+        userId,
         name,
         seat,
         price,
@@ -65,7 +67,6 @@ const postVehicle = async (req: any, res: Response, next: NextFunction) => {
 
         }
 
-        console.log(results)
         const insuranceImageResponse = await cloudinary.uploader.upload(
             bluebookImage.tempFilePath,
             { folder: "bluebook_images" },
@@ -84,10 +85,12 @@ const postVehicle = async (req: any, res: Response, next: NextFunction) => {
                 }
             }
         );
-        // post vehicle logic
 
+        
+        // post vehicle logic
+        
         const response = await new vehicleModel({
-            ownerId,
+            userId: new mongoose.Types.ObjectId(userId) ,
             name,
             price,
             milage,
