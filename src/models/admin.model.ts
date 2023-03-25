@@ -7,6 +7,7 @@ const adminSchema = new mongoose.Schema({
     firstName: String,
     lastName: String,
     password: String,
+    token: 'string',
     createdOn: Date,
 });
 // match password method

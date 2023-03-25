@@ -25,20 +25,47 @@ const postVehicle = async (req: any, res: Response, next: NextFunction) => {
         const insuranceImage = req.files.insuranceImage;
         const bluebookImage = req.files.bluebookImage;
 
-        const uploadPromises = images.map(async (image: any) => {
-            const result = await cloudinary.uploader.upload(
-                image.tempFilePath,
-                { folder: "car_images" },
-                function(err: any, success: any) {
-                    if (err) {
-                        console.log(err);
+        // for multiple images
+        //
+        let results: any;
+        try {
+            const uploadPromises = images.map(async (image: any) => {
+                const result = await cloudinary.uploader.upload(
+                    image.tempFilePath,
+                    { folder: "car_images" },
+                    function(err: any, success: any) {
+                        if (err) {
+                            console.log(err);
+                        }
                     }
-                }
-            );
-            return { public_id: result.public_id, url: result.secure_url };
-        });
-        const results = await Promise.all(uploadPromises);
+                );
+                return { public_id: result.public_id, url: result.secure_url };
+            });
+            results = await Promise.all(uploadPromises);
 
+
+        } catch (error: any) {
+            if (error.message == 'images.map is not a function') {
+                const result = await cloudinary.uploader.upload(
+                    images.tempFilePath,
+                    { folder: "car_images" },
+                    function(err: any, success: any) {
+                        if (err) {
+                            console.log(err);
+                        }
+                    }
+                );
+
+                results = {
+                    public_id: result.public_id,
+                    url: result.secure_url,
+
+                }
+            }
+
+        }
+
+        console.log(results)
         const insuranceImageResponse = await cloudinary.uploader.upload(
             bluebookImage.tempFilePath,
             { folder: "bluebook_images" },
@@ -70,6 +97,7 @@ const postVehicle = async (req: any, res: Response, next: NextFunction) => {
             location,
             description,
             status: false,
+            available: true,
             createdOn: new Date().toString(),
             carImages: results,
             insuranceImage: {

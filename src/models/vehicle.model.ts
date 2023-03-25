@@ -1,8 +1,9 @@
 
 import mongoose from 'mongoose'
+const User = require('./user.model')
 
 const vehicleModel = new mongoose.Schema({
-    ownerId: String,
+    userId: {type: mongoose.Schema.Types.ObjectId, ref: User},
     name: String,
     price: String,
     model: String,
@@ -23,6 +24,7 @@ const vehicleModel = new mongoose.Schema({
         url: String
     },
     status: Boolean,
+    available: {type: Boolean},
     createdOn: Date,
 }) 
 
