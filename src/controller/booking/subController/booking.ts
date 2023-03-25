@@ -1,10 +1,11 @@
 const Booking = require('../../../models/booking.model');
 const Vehicle = require('../../../models/vehicle.model');
 import { Request, Response, NextFunction } from "express";
+import mongoose from 'mongoose'
 
-async function createBooking(req: Request, res: Response) {
+const CREATE_BOOKING = async(req: Request, res: Response) => {
 
-  const { startDate, endDate, vehicleId, userId } = req.body;
+  const { startDate, endDate, vehicleId, userId , amount} = req.body;
 
   try {
     // Check if the vehicle is available during the booking period
@@ -17,8 +18,11 @@ async function createBooking(req: Request, res: Response) {
     const booking = new Booking({
       startDate,
       endDate,
-      vehicleId: vehicleId,
-      userId: userId,
+      status: 'completed',
+      amount: parseInt(amount),
+      vehicleId: new mongoose.Types.ObjectId(vehicleId),
+      userId: new mongoose.Types.ObjectId(userId),
+      createdOn: new Date().toString(), 
     });
 
     // Save the booking to the database
@@ -28,14 +32,12 @@ async function createBooking(req: Request, res: Response) {
     vehicle.available = false;
     await vehicle.save();
 
-    return res.status(201).json({ message: 'Booking created successfully.' });
+    return res.status(201).json({ message: 'Booking created successfully.', bookingDetail: booking });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: 'Internal server error.' });
   }
 }
 
-module.exports = {
-  createBooking
-};
+module.exports = CREATE_BOOKING;
 
