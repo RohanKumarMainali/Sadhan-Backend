@@ -7,10 +7,16 @@ import moment from 'moment'
 const GET_BOOKING = async(req: Request, res: Response) => {
 
 
-        const vehicleId = req.query.vehicleId;
+        const vehicleId = req?.query?.vehicleId;
+        const userId = req?.query?.userId;
     try {
         if(vehicleId != null || vehicleId != undefined){
             let bookings = await Booking.find({vehicleId: vehicleId})
+            return res.status(200).send({bookings: bookings})
+        }
+
+        if(userId != null || userId != undefined){
+            let bookings = await Booking.find({userId: userId})
             return res.status(200).send({bookings: bookings})
         }
         const bookings = await Booking.find({});
