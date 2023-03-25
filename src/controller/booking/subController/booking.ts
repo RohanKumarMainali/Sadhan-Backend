@@ -2,6 +2,7 @@ const Booking = require('../../../models/booking.model');
 const Vehicle = require('../../../models/vehicle.model');
 import { Request, Response, NextFunction } from "express";
 import mongoose from 'mongoose'
+import moment from 'moment'
 
 const CREATE_BOOKING = async(req: Request, res: Response) => {
 
@@ -10,11 +11,30 @@ const CREATE_BOOKING = async(req: Request, res: Response) => {
   try {
     // Check if the vehicle is available during the booking period
     const vehicle = await Vehicle.findById(vehicleId);
+    
+    // if vehicle is available that means it has not been booked till now
+
     if (!vehicle.available) {
-      return res.status(400).json({ message: 'Vehicle is not available for the selected dates.' });
+
+    // check for booking conflicts
+
+    const bookings = await Booking.find({vehicleId: vehicleId});
+    const conflict = bookings.some((booking: any)=>{
+        const start = booking.startDate;
+        const end = booking.endDate;
+        return(
+        (moment(startDate).isSameOrAfter(start) && moment(startDate).isBefore(end)) ||
+        (moment(endDate).isSameOrBefore(end) && moment(endDate).isAfter(start))
+        )
+    }) 
+    
+    if (conflict) {
+      return res.status(400).json({ message: 'Booking conflicts with existing bookings' });
     }
 
-    // Create a new booking
+    }
+
+        // Create a new booking
     const booking = new Booking({
       startDate,
       endDate,
