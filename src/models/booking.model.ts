@@ -6,6 +6,7 @@ const bookingSchema = new mongoose.Schema({
     vehicleId : {type: mongoose.Schema.Types.ObjectId, ref: Vehicle},
     userId : {type: mongoose.Schema.Types.ObjectId, ref: User},
     status: {type: String, required: true},
+    amount: {type: Number, required: true},
     startDate : {type: Date, required: true},
     endDate : {type: Date, required: true},
     createdOn : {type: Date, required: true},

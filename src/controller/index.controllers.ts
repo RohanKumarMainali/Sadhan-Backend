@@ -4,7 +4,8 @@ const controllers = {
     vehicleControllers: require('./vehicle/index.controller'),
     khaltiCotrollers: require('./khalti/index.controller'),
     kycControllers: require('./kyc/index.controller'),
-    bookingController: require('./booking/index.controller')
+    bookingControllers: require('./booking/index.controller'),
+    transactionControllers: require('./transaction/index.controller')
 }
 
 module.exports = controllers;

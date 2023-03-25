@@ -1,5 +1,6 @@
 const bookingRoute = require('express').Router()
 
+//const {createBooking} = require('../controller/khalti/index.controller');
 const {createBooking} = require('../controller/index.controllers').bookingControllers;
 
 
