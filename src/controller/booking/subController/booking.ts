@@ -6,7 +6,7 @@ import moment from 'moment'
 
 const CREATE_BOOKING = async(req: Request, res: Response) => {
 
-  const { startDate, endDate, vehicleId, userId , amount} = req.body;
+  const { startDate, endDate, vehicleId, userId ,vehiclePrice, amount, vehicleName, vehicleNumber, vehicleModel , userName} = req.body;
 
   try {
     // Check if the vehicle is available during the booking period
@@ -36,6 +36,11 @@ const CREATE_BOOKING = async(req: Request, res: Response) => {
 
         // Create a new booking
     const booking = new Booking({
+      userName,
+      vehicleName,
+      vehicleModel,
+      vehicleNumber,
+      vehiclePrice,
       startDate,
       endDate,
       status: 'completed',

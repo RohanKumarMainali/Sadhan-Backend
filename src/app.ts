@@ -9,6 +9,8 @@ const cors = require("cors");
 const bodyParser = require('body-parser')
 const cookieParser = require("cookie-parser");
 const fileUpload = require('express-fileupload')
+const renewTokenInterval = require('./middleware/renewToken')
+const cron = require('node-cron')
 import { Express, Request, Response, NextFunction } from "express";
 
 const passport = require("passport");
@@ -47,6 +49,8 @@ app.use(cookieParser());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use("/api", router);
+
+// node - cron
 
 app.listen(PORT, () => console.log(`I am running at http://localhost:${PORT}`));
 export default app;

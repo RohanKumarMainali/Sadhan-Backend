@@ -92,6 +92,22 @@ const approveKyc = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+const rejectKyc = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { id } = req.body;
+    const response = await userModel.findByIdAndUpdate(id, {
+      status: "rejected",
+    });
+    return res
+      .status(200)
+      .send({ success: true, message: "User is rejected by admin successfully! " });
+  } catch (error: any) {
+    return res.status(400).send({ message: error.message });
+  }
+};
+
+
+
 const viewKycRequest = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.body;
@@ -107,4 +123,19 @@ const viewKycRequest = async (req: Request, res: Response, next: NextFunction) =
   }
 };
 
-module.exports = { postKYC, approveKyc , viewKycRequest};
+
+const viewAllKyc = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+
+    // get all kyc which are in rejected or verified state 
+    const response = await userModel.find({ $or:[ {status: "rejected"}, {status: "verified"}]});
+    console.log(response)
+    return res
+      .status(200)
+      .send({ data: response});
+  } catch (error: any) {
+    return res.status(400).send({ message: error.message });
+  }
+};
+
+module.exports = { postKYC, approveKyc , viewKycRequest, viewAllKyc, rejectKyc};

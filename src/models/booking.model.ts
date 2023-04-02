@@ -4,7 +4,12 @@ const User = require('./user.model')
 
 const bookingSchema = new mongoose.Schema({
     vehicleId : {type: mongoose.Schema.Types.ObjectId, ref: Vehicle},
+    vehicleName: String, 
+    vehicleNumber: String, 
+    vehicleModel: String, 
+    vehiclePrice: String, 
     userId : {type: mongoose.Schema.Types.ObjectId, ref: User},
+    userName :String, 
     status: {type: String, required: true},
     amount: {type: Number, required: true},
     startDate : {type: Date, required: true},
