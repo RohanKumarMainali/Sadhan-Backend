@@ -13,7 +13,7 @@ const login = async (req: any, res: any, next: NextFunction) => {
     return res
       .status(StatusCodes.UNAUTHORIZED)
       .send(
-        "Client side validation issues. Please carefully send the right format of email and password !!"
+        "Server side validation issues. Please carefully send the right format of email and password !!"
       );
   }
 
@@ -47,6 +47,7 @@ const login = async (req: any, res: any, next: NextFunction) => {
         lastName: payload.lastName,
         email: email,
         role: "user",
+        method: "custom",
       };
       const { ACCESS_TOKEN, REFRESH_TOKEN } = await auth.GENERATE_JWT(
         jwtPayload
@@ -75,6 +76,8 @@ const login = async (req: any, res: any, next: NextFunction) => {
             email: email,
             firstName: data[0].firstName,
             lastName: data[0].lastName,
+            role: 'user',
+            method: 'custom',
           });
         });
       } catch (err) {

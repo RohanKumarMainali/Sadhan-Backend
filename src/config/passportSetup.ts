@@ -74,7 +74,7 @@ passport.use(
       } 
       else id = result[0]._id
 
-      const user = {  id: id,email, firstName, lastName, role,test:'test' };
+      const user = {  id: id,email, firstName, lastName, role,method: 'google'};
       return done(null, user);
     }
   )

@@ -213,7 +213,6 @@ route.get(
     });
 
     const result : any= await userModel.findOneAndUpdate({email: req.user.email}, {$set: {token: REFRESH_TOKEN}})
-    console.log(result)
     req.user = {_id: result._id, firstName: result.firstName,lastName: result.lastName, email: req.email, role: 'user'}
     res.redirect("http://localhost:3000");
   }
