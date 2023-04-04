@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema({
     email: 'string',
     password: 'string',
     token: 'string',
+    method: 'string',
     emailVerified: 'string',
     phoneNumberVerified: 'string',
     otp: 'string',
