@@ -5,7 +5,8 @@ const controllers = {
     khaltiCotrollers: require('./khalti/index.controller'),
     kycControllers: require('./kyc/index.controller'),
     bookingControllers: require('./booking/index.controller'),
-    transactionControllers: require('./transaction/index.controller')
+    transactionControllers: require('./transaction/index.controller'),
+    searchControllers: require('./search/index.controller')
 }
 
 module.exports = controllers;
