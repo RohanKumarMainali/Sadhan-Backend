@@ -22,7 +22,7 @@ const searchVehicle = async (
           },
         },
       },
-      { $limit: 5 },
+      { $limit: 8 },
     ];
 
     const response = await vehicleModel.aggregate(agg);

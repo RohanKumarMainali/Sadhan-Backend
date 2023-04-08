@@ -59,6 +59,7 @@
     "otp-generator": "^4.0.1",
     "passport": "^0.5.3",
     "passport-google-oauth2": "^0.2.0",
-    "passport-oauth2": "^1.6.1"
+    "passport-oauth2": "^1.6.1",
+    "slugify": "^1.6.6"
   }
 }

@@ -11,6 +11,7 @@ const KHALTI_ROUTES = require('./khalti.routes')
 const BOOKING_ROUTES = require('./booking.routes')
 const TRANSACTION_ROUTES = require('./transaction.routes')
 const SEARCH_ROUTES = require('./search.routes')
+const CATEGORY_ROUTES = require('./category.routes')
 
 Router.use(ADMIN_ROUTES);
 Router.use(USER_ROUTES);
@@ -20,5 +21,6 @@ Router.use(KHALTI_ROUTES)
 Router.use(BOOKING_ROUTES)
 Router.use(TRANSACTION_ROUTES)
 Router.use(SEARCH_ROUTES)
+Router.use(CATEGORY_ROUTES)
 
 module.exports = Router;

@@ -6,6 +6,7 @@ const controllers = {
     kycControllers: require('./kyc/index.controller'),
     bookingControllers: require('./booking/index.controller'),
     transactionControllers: require('./transaction/index.controller'),
+    categoryControllers: require('./categories/index.controller'),
     searchControllers: require('./search/index.controller')
 }
 
