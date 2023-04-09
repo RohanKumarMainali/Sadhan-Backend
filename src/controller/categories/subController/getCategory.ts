@@ -9,40 +9,38 @@ interface imageType {
   url: string;
 }
 
-const createCategory = (categoryList: any, parentId=null) =>{
+function createCategory  (categoryList: any, parentId = null) : Array<{}>{
+  const modifiedCategoryList = [];
+  let category;
+  if (parentId === null) {
+    category = categoryList.filter(
+      (category: any) => category.parentId == undefined
+    );
+  } else {
+    category = categoryList.filter(
+      (category: any) => category.parentId == parentId
+    );
+  }
 
-    const modifiedCategoryList = [];
-    let category;
-    if(parentId===nll){
-        category = categoryList.filter((category: any) => category.parentId == undefined);
-    }else{
-        category = categoryList.filter((category: any) => category.parentId == parentId);
-    }
+  for (let eachCategory of category) {
+    modifiedCategoryList.push({
+      _id: eachCategory._id,
+      name: eachCategory.name,
+      slug: eachCategory.slug,
+      children: createCategory(categoryList, eachCategory._id),
+    });
+  }
 
-    for(let eachCategory of category){
-
-        modifiedCategoryList.push({
-            _id: eachCategory._id,
-            name: eachCategory.name,
-            slug: eachCategory.slug,
-            children: createCategory(categoryList, eachCategory._id)
-
-        })
-
-    }
-
-    return modifiedCategoryList;
-}} 
-} 
+  return modifiedCategoryList;
+}
 
 const getCategory = async (req: any, res: Response, next: NextFunction) => {
   try {
     const response = await categoryModel.find({});
 
-    categoryList = createCategory(response)
     return res.status(200).send({
       success: true,
-      categoryList,
+      response,
     });
   } catch (error) {
     next(error);
