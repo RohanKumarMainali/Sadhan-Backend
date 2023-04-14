@@ -9,7 +9,7 @@ interface imageType {
   url: string;
 }
 
-function createCategory  (categoryList: any, parentId = null) : Array<{}>{
+function createCategory(categoryList: any, parentId = null): Array<{}> {
   const modifiedCategoryList = [];
   let category;
   if (parentId === null) {
@@ -36,12 +36,23 @@ function createCategory  (categoryList: any, parentId = null) : Array<{}>{
 
 const getCategory = async (req: any, res: Response, next: NextFunction) => {
   try {
-    const response = await categoryModel.find({});
+    const id = req.params.id;
+    if (id == undefined) {
+      // get all category
+      const response = await categoryModel.find({});
 
-    return res.status(200).send({
-      success: true,
-      response,
-    });
+      return res.status(200).send({
+        success: true,
+        response,
+      });
+    }
+    // if id is given
+    const response = await categoryModel.findById(id);
+    const test = [];
+    await test.push(response);
+    return res.status(200).send({ response: test });
+
+    // ------------
   } catch (error) {
     next(error);
   }
