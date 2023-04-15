@@ -6,17 +6,17 @@ const cloudinary = require("../../../utils/cloudinary");
 const updateCategory = async (req: any, res: Response, next: NextFunction) => {
   const { id } = req.params;
   const updateInfo = req.body;
-  try{
-  if (id == undefined)
-    return res
-      .status(400)
-      .send({ success: false, message: "Please provide valid vahicle id!" });
+  try {
+    if (id == undefined)
+      return res
+        .status(400)
+        .send({ success: false, message: "Please provide valid vahicle id!" });
 
-   // category Image
+    // category Image
 
-    if (req?.files?.categoryImage) {
-      const categoryImageResponse = await cloudinary.uploader.upload(
-        req.files.categoryImage?.tempFilePath,
+    if (req?.files?.image) {
+      const imageResponse = await cloudinary.uploader.upload(
+        req.files.image?.tempFilePath,
         { folder: "category_image" },
         function (err: any, success: any) {
           if (err) {
@@ -24,9 +24,9 @@ const updateCategory = async (req: any, res: Response, next: NextFunction) => {
           }
         }
       );
-      updateInfo.categoryImage = {
-        public_id: categoryImageResponse.public_id,
-        url: categoryImageResponse.secure_url,
+      updateInfo.image = {
+        public_id: imageResponse.public_id,
+        url: imageResponse.secure_url,
       };
     }
 

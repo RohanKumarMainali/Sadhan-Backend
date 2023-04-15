@@ -13,10 +13,12 @@ const postCategory = async (req: any, res: Response, next: NextFunction) => {
     name: req.body.name,
     slug: slugify(req.body.name),
     image: { public_id: "", url: "" },
+    createdOn: new Date().toString(),
   };
 
   if (req.body.parentId) {
     categoryObj.parentId = req.body.parentId;
+    categoryObj.parentName = req.body.parentName;
   }
 
   try {

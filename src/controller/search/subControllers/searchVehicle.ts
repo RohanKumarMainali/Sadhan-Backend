@@ -9,6 +9,13 @@ const searchVehicle = async (
 ) => {
   const { name, location } = req.query;
 
+  const query = req.query;
+  // when no query is sent 
+  if(Object.keys(query).length === 0 ){
+    const response = await vehicleModel.find({});
+    return res.status(200).send({data: response})
+  }
+
   try {
     const agg = [
       {

@@ -40,13 +40,15 @@ const login = async (req: any, res: any, next: NextFunction) => {
         });
       }
 
-      const payload = data[0];
+
+      const payload : any = data[0];
+      let role = payload?.role === 'owner' ? 'owner' : 'user';
       const jwtPayload = {
         id: payload._id,
         firstName: payload.firstName,
         lastName: payload.lastName,
         email: email,
-        role: "user",
+        role: role,
         method: "custom",
       };
       const { ACCESS_TOKEN, REFRESH_TOKEN } = await auth.GENERATE_JWT(
@@ -76,7 +78,7 @@ const login = async (req: any, res: any, next: NextFunction) => {
             email: email,
             firstName: data[0].firstName,
             lastName: data[0].lastName,
-            role: 'user',
+            role: role,
             method: 'custom',
           });
         });

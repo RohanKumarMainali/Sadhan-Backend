@@ -13,7 +13,9 @@ const userSchema = new mongoose.Schema({
     phoneNumberVerified: 'string',
     otp: 'string',
     kyc: Object,
+    paymentInfo: Object,
     status: 'string',
+    role: 'string',
     createdOn: Date,
 })
 

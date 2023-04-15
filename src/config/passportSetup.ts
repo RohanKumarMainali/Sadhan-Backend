@@ -47,7 +47,7 @@ passport.use(
       const email = profile?.emails[0]?.value;
       const firstName = profile?.name?.givenName;
       const lastName = profile?.name?.familyName;
-      const role = "user";
+      let role = "user";
 
       // check if user exist or not
       const result = await userModel.find({ email: email });
@@ -72,7 +72,11 @@ passport.use(
            console.log(error)
         }
       } 
-      else id = result[0]._id
+      else {
+          id = result[0]._id
+
+          role = result[0].role
+      }
 
       const user = {  id: id,email, firstName, lastName, role,method: 'google'};
       return done(null, user);

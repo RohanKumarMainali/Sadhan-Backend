@@ -57,14 +57,14 @@ route.get("/user/logout", (req: Request, res: Response) => {
 route.post("/renewToken", async (req: Request, res: Response) => {
   const refreshToken = req.body.refreshToken;
   if (!refreshToken)
-    return res.status(403).send({ message: "User not authenticated" });
+    return res.status(401).send({ message: "User not authenticated" });
   else {
     try {
       const secret = process.env.REFRESH_TOKEN_KEY;
       const user = jwt.verify(refreshToken, secret);
       if (user == null)
         return res
-          .status(400)
+          .status(401)
           .send({ success: false, message: "token invalid or expired" });
       else {
         // decode payload from token
