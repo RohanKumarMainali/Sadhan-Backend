@@ -15,7 +15,6 @@ const getVehicleByUser = async (
         .send({ success: false, message: "User Id is not provided" });
     }
 
-
     // if userId is given
 
     const response = await vehicleModel.find({ userId: new mongoose.Types.ObjectId(userId)});

@@ -7,8 +7,8 @@ import moment from "moment";
 const GET_RENTALS = async (req: Request, res: Response) => {
   const ownerId = req.params.ownerId;
   try {
-    const bookings = await Booking.find({ ownerId: ownerId });
-    return res.status(200).send({ bookings: bookings });
+    const rentals = await Booking.find({ ownerId: ownerId });
+    return res.status(200).send({ rentals: rentals });
   } catch (error: any) {
     return res.status(500).send(error.message);
   }

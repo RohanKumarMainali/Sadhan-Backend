@@ -11,6 +11,7 @@ const postPaymentInfo = async (
   try {
     const response = await userModel.findByIdAndUpdate(id, {
       role: "owner",
+      status: "pending",
       paymentInfo: {
         email,
         phoneNumber,
