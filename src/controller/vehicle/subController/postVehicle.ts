@@ -71,7 +71,7 @@ const postVehicle = async (req: any, res: Response, next: NextFunction) => {
     }
 
     const insuranceImageResponse = await cloudinary.uploader.upload(
-      bluebookImage.tempFilePath,
+      insuranceImage.tempFilePath,
       { folder: "bluebook_images" },
       function (err: any, success: any) {
         if (err) {
@@ -80,7 +80,7 @@ const postVehicle = async (req: any, res: Response, next: NextFunction) => {
       }
     );
     const bluebookImageResponse = await cloudinary.uploader.upload(
-      insuranceImage.tempFilePath,
+      bluebookImage.tempFilePath,
       { folder: "insurance_images" },
       function (err: any, success: any) {
         if (err) {
