@@ -49,6 +49,7 @@ const login = async (req: any, res: any, next: NextFunction) => {
         lastName: payload.lastName,
         email: email,
         role: role,
+        status: payload.status,
         method: "custom",
       };
       const { ACCESS_TOKEN, REFRESH_TOKEN } = await auth.GENERATE_JWT(

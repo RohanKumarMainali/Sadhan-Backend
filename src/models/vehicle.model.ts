@@ -23,7 +23,7 @@ const vehicleModel = new mongoose.Schema({
         public_id: String,
         url: String
     },
-    status: Boolean,
+    status: String,
     available: {type: Boolean},
     createdOn: Date,
 }) 

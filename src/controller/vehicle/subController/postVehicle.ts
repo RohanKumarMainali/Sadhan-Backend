@@ -101,7 +101,6 @@ const postVehicle = async (req: any, res: Response, next: NextFunction) => {
       vehicleNumber,
       location,
       description,
-      status: false,
       available: true,
       createdOn: new Date().toString(),
       carImages: results,
@@ -113,6 +112,7 @@ const postVehicle = async (req: any, res: Response, next: NextFunction) => {
         public_id: bluebookImageResponse.public_id,
         url: bluebookImageResponse.secure_url,
       },
+      status: 'pending',
     });
 
     await response.save();

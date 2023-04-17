@@ -21,6 +21,8 @@ const SIGNUP = async (req: Request, res: Response) => {
           lastName: lastName,
           email:email,
           password: password,
+          status: 'unverified',
+          role : 'user',
           createdOn: new Date().toDateString(),
         });
 
