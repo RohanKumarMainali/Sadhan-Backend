@@ -29,8 +29,7 @@ const updateVehicle = async (req: any, res: Response, next: NextFunction) => {
       prevImage.push(JSON.parse(previousImage));
     }
   } catch (error) {
-
-      console.log(error)
+    console.log(error);
   }
 
   // for images
