@@ -33,6 +33,7 @@ jobs:
       - name: Deploy to Remote
         uses: render-inc/github-action@1.5.0
         with:
+          api-key: ${{secrets.RENDER_API_KEY}}
           renderEmail: ${{ secrets.RENDER_EMAIL }}
           renderPassword: ${{ secrets.RENDER_PASSWORD }}
           renderAccountId: ${{ secrets.RENDER_ACCOUNT_ID }}
