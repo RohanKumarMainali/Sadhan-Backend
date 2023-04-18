@@ -18,6 +18,8 @@ const postVehicle = async (req: any, res: Response, next: NextFunction) => {
     milage,
     model,
     vehicleNumber,
+    categoryId,
+    categoryName,
   } = req.body;
 
   try {
@@ -101,6 +103,8 @@ const postVehicle = async (req: any, res: Response, next: NextFunction) => {
       vehicleNumber,
       location,
       description,
+      categoryId,
+      categoryName,
       available: true,
       createdOn: new Date().toString(),
       carImages: results,

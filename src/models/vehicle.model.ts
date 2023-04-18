@@ -13,7 +13,8 @@ const vehicleModel = new mongoose.Schema({
     vehicleNumber: String,
     location: String,
     description: String,
-    category: String,
+    categoryId: String,
+    categoryName: String,
     review: String,
     bluebookImage: {
         public_id: String,
