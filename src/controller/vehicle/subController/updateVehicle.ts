@@ -15,10 +15,28 @@ const updateVehicle = async (req: any, res: Response, next: NextFunction) => {
       .status(400)
       .send({ success: false, message: "Please provide valid vahicle id!" });
 
+  // if images are sent with public_id and url, it means they are already uploaded to cloudinary
+  let prevImage = [];
+  const previousImage = req.body.prevImage;
+  console.log(req.body.prevImage);
+  try {
+    if (Array.isArray(previousImage)) {
+      // parsing the previousImage
+      previousImage.map((image: any) => {
+        prevImage.push(JSON.parse(image));
+      });
+    } else {
+      prevImage.push(JSON.parse(previousImage));
+    }
+  } catch (error) {
+
+      console.log(error)
+  }
+
   // for images
   let imageResults = undefined;
   const carImages = req?.files?.carImages;
-  let results;
+  let results = [];
 
   try {
     // for array image
@@ -27,7 +45,7 @@ const updateVehicle = async (req: any, res: Response, next: NextFunction) => {
     console.log("images " + images);
 
     // for multiple images
-    let results: any;
+    let results: any = [];
     let uploadPromises: Promise<any>[];
     if (images !== undefined) {
       if (Array.isArray(images)) {
@@ -65,8 +83,19 @@ const updateVehicle = async (req: any, res: Response, next: NextFunction) => {
       results = await Promise.all(uploadPromises);
     }
 
+    // appending the previous Image in results i.e array of carImages
+
+    if (prevImage.length !== 0) {
+      for (let i = 0; i < prevImage.length; i++) {
+        try {
+          results.push(prevImage[i]);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    }
+
     updateInfo.carImages = results;
-    console.log("multiple image " + results);
 
     // bluebookImage
 

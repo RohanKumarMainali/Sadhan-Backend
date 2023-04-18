@@ -67,7 +67,7 @@ const postVehicle = async (req: any, res: Response, next: NextFunction) => {
         ];
       }
       results = await Promise.all(uploadPromises);
-      console.log("multiple image " + results);
+      console.log("multiple image " + JSON.stringify(results));
     } catch (error: any) {
       console.log(error);
     }
