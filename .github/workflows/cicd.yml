@@ -35,14 +35,9 @@ jobs:
         with:
           api-key: ${{secrets.RENDER_API_KEY}}
           renderEmail: ${{ secrets.RENDER_EMAIL }}
-          renderPassword: ${{ secrets.RENDER_PASSWORD }}
-          renderAccountId: ${{ secrets.RENDER_ACCOUNT_ID }}
           renderServiceId: ${{ secrets.RENDER_SERVICE_ID }}
           renderDirectory: './dist'
           startCommand: 'npm start'
-        env:
-          MONGO_URI: ${{ secrets.MONGO_URI }}
-
 
 
    
