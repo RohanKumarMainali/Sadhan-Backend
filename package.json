@@ -5,9 +5,9 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
-    "start": "node dist/app.js",
+    "start": "node dest/app.js",
     "dev": "nodemon src/app.ts",
-    "build": "tsc -p",
+    "build": "tsc ",
     "test": "jest",
     "lint": "eslint . --ext .ts"
   },
