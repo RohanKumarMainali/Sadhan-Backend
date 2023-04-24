@@ -4,6 +4,42 @@ on:
     branches: [master]
       
 jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+
+    strategy: 
+      matrix:
+        node-version: [19.8.1]
+
+    steps:
+      - name: Checkout 
+        uses: actions/checkout@v3 # was "v2" before 
+        with: 
+          fetch-depth: 0
+
+      - name: Use Node.JS ${{ matrix.node-version }}
+        uses: actions/setup-node@v3 # was "v2" before
+        with: 
+          node-version: ${{ matrix.node-version }}
+
+      - name: NPM install, build and test
+        run: |
+          npm install
+          npm test
+        env: 
+          MONGO_URI: ${{ secrets.MONGO_URI }}
+          ACCESS_TOKEN_KEY: ${{ secrets.ACCESS_TOKEN_KEY }}
+          REFRESH_TOKEN_KEY: ${{ secrets.REFRESH_TOKEN_KEY }}
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+          EMAIL: ${{ secrets.EMAIL }}
+          PASSWORD: ${{ secrets.PASSWORD }}
+          CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
+          CLOUDINARY_NAME: ${{ secrets.CLOUDINARY_NAME }}
+          CLOUDINARY_API_SECRET: ${{ secrets.CLOUDINARY_API_SECRET }}
+          CALLBACK_URL: http://localhost:5000/google/callback
+ 
   build:
     runs-on: ubuntu-latest
     steps:
@@ -17,7 +53,7 @@ jobs:
 
   deploy:
     name: Deploy
-    needs: build
+    needs: [test]
     runs-on: ubuntu-latest
     steps: 
       - name: Deploy to production
