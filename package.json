@@ -7,7 +7,6 @@
     "start": "node ./dest/app.js",
     "dev": "nodemon src/app.ts",
     "build":"npm install && tsc",
-    "postinstall": "tsc",
     "test": "jest",
     "lint": "eslint . --ext .ts"
   },
