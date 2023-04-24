@@ -13,10 +13,11 @@ const deleteVehicle = async (
 
         const vehicle = await vehicleModel.findOne({ _id: id });
         // destructuring images to delte from cloudinary
-
         const { bluebookImage, insuranceImage, carImages } = vehicle
-        const test = await cloudinary.uploader.destroy(bluebookImage.public_id, function(err: any, success: any) { if (err) console.log(err) })
-        const test2 =await cloudinary.uploader.destroy(insuranceImage.public_id, function(err: any, success: any) { if (err) console.log(err) })
+        let test;
+        let test2
+        if(bluebookImage!== undefined) test = await cloudinary.uploader.destroy(bluebookImage.public_id, function(err: any, success: any) { if (err) console.log(err) })
+        if(insuranceImage!==undefined) test2 =await cloudinary.uploader.destroy(insuranceImage.public_id, function(err: any, success: any) { if (err) console.log(err) })
 
         // deleting multiple images of car
 
