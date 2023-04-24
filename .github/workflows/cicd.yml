@@ -11,15 +11,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-node@v3
-      with:
-        node-version: 19.8.1
-    - name: npm install
-      run: npm install
-    # Heavily modified deploy job to fit render.com
+      - uses: actions/checkout@v2
+      - name: Use Node.js 19.8.1
+        uses: actions/setup-node@v2
+        with:
+          node-version: 19.8.1
+      - name: Install dependencies
+        run: npm install
+      - name: Build
+        run: npm run build
+        # Heavily modified deploy job to fit render.com
     deploy:
       name: Deploy
+      needs: build
       runs-on: ubuntu-latest
 
       steps: 
