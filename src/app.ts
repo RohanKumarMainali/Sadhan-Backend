@@ -16,7 +16,7 @@ import { Express, Request, Response, NextFunction } from "express";
 const passport = require("passport");
 // server config
 const app: Express = express();
-require("./config/passportSetup.ts");
+require("./config/passportSetup");
 
 const PORT = process.env.PORT;
 // database connection
