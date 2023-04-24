@@ -34,7 +34,6 @@ app.use(
     })
 );
 
-
 app.use(
     cookieSession({
         name: "session",
@@ -52,5 +51,5 @@ app.use("/api", router);
 
 // node - cron
 
-app.listen(PORT, () => console.log(`I am running at http://localhost:${PORT}`));
+export const httpServer = app.listen(PORT, () => console.log(`I am running at http://localhost:${PORT}`));
 export default app;
