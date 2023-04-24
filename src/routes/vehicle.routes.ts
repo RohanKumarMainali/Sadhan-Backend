@@ -1,10 +1,10 @@
 
 const vehicleRoute = require('express').Router();
-const postVehicle = require('../controller/vehicle/index.controller.ts').postVehicle
-const getVehicle = require('../controller/vehicle/index.controller.ts').getVehicle
-const deleteVehicle = require('../controller/vehicle/index.controller.ts').deleteVehicle
-const updateVehicle = require('../controller/vehicle/index.controller.ts').updateVehicle
-const getVehicleByUser = require('../controller/vehicle/index.controller.ts').getVehicleByUser
+const postVehicle = require('../controller/vehicle/index.controller').postVehicle
+const getVehicle = require('../controller/vehicle/index.controller').getVehicle
+const deleteVehicle = require('../controller/vehicle/index.controller').deleteVehicle
+const updateVehicle = require('../controller/vehicle/index.controller').updateVehicle
+const getVehicleByUser = require('../controller/vehicle/index.controller').getVehicleByUser
 
 // manage
 
