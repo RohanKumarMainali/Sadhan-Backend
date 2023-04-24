@@ -3,7 +3,7 @@ name: Sadhan Deploy WorkFlow
 
 on:
   push:
-    branches: [main]
+    branches: [master]
 
       
 jobs:
@@ -34,7 +34,6 @@ jobs:
         uses: render-inc/github-action@1.5.0
         with:
           api-key: ${{secrets.RENDER_API_KEY}}
-          renderEmail: ${{ secrets.RENDER_EMAIL }}
           renderServiceId: ${{ secrets.RENDER_SERVICE_ID }}
           renderDirectory: './dest'
           startCommand: 'npm start'
