@@ -12,6 +12,7 @@ const BOOKING_ROUTES = require('./booking.routes')
 const TRANSACTION_ROUTES = require('./transaction.routes')
 const SEARCH_ROUTES = require('./search.routes')
 const CATEGORY_ROUTES = require('./category.routes')
+const REVIEW_ROUTES = require('./review.routes')
 
 Router.use(ADMIN_ROUTES);
 Router.use(USER_ROUTES);
@@ -22,5 +23,6 @@ Router.use(BOOKING_ROUTES)
 Router.use(TRANSACTION_ROUTES)
 Router.use(SEARCH_ROUTES)
 Router.use(CATEGORY_ROUTES)
+Router.use(REVIEW_ROUTES)
 
 module.exports = Router;
