@@ -10,7 +10,7 @@ const updateCategory = async (req: any, res: Response, next: NextFunction) => {
     if (id == undefined)
       return res
         .status(400)
-        .send({ success: false, message: "Please provide valid vahicle id!" });
+        .send({ success: false, message: "Please provide valid category id!" });
 
     // category Image
 
