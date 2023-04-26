@@ -16,10 +16,6 @@ const userSchema = new mongoose.Schema({
     paymentInfo: Object,
     status: 'string',
     role: 'string',
-     reviews: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Review'
-  }],
     createdOn: Date,
 })
 

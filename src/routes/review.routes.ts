@@ -2,10 +2,12 @@ const reviewRouter = require("express").Router();
 
 const {
     postReview,
+    getReview
 } = require("../controller/index.controllers").reviewControllers;
 
-//categoryRouter.get("/getCategory", getCategory);
-//categoryRouter.get("/getCategory/:id", getCategory);
+reviewRouter.get("/getReview", getReview);
+reviewRouter.get("/getReview/:userId", getReview);
+reviewRouter.get("/getReview/vehicle/:vehicleId", getReview);
 reviewRouter.post("/postReview", postReview);
 //categoryRouter.put("/updateCategory/:id", updateCategory);
 //categoryRouter.delete("/deleteCategory/:id", deleteCategory);
