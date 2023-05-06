@@ -65,7 +65,10 @@ passport.use(
             method: "google",
             email_verified: "verified",
             role: "user",
-            image: null,
+            image: {
+                "public_id": "profile_image/qr2sox9whiduxmljgxyu",
+                "url": "https://res.cloudinary.com/degtbdhfn/image/upload/v1683361106/profile_image/qr2sox9whiduxmljgxyu.png"
+            },
             createdOn: new Date().toDateString(),
           });
 

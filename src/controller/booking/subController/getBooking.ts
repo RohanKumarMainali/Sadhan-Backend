@@ -10,6 +10,15 @@ const GET_BOOKING = async(req: Request, res: Response) => {
         const vehicleId = req?.query?.vehicleId;
         const userId = req?.query?.userId;
     try {
+
+        if(vehicleId && userId) {
+
+            let bookings = await Booking.find({userId: userId, vehicleId: vehicleId})
+            let canReview = false;
+            if(bookings.length) canReview=true
+            return res.status(200).send({bookings: bookings, canReview: canReview})
+
+        }
         if(vehicleId != null || vehicleId != undefined){
             let bookings = await Booking.find({vehicleId: vehicleId})
             return res.status(200).send({bookings: bookings})

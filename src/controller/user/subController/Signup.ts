@@ -23,6 +23,11 @@ const SIGNUP = async (req: Request, res: Response) => {
           password: password,
           status: "unverified",
           role: "user",
+          method: "custom",
+          image: {
+            public_id: "profile_image/qr2sox9whiduxmljgxyu",
+            url: "https://res.cloudinary.com/degtbdhfn/image/upload/v1683361106/profile_image/qr2sox9whiduxmljgxyu.png",
+          },
           createdOn: new Date().toDateString(),
         });
 

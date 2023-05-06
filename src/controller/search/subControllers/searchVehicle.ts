@@ -7,14 +7,35 @@ const searchVehicle = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { name, location } = req.query;
+  const { name, location, category } = req.query;
 
   const query = req.query;
-  // when no query is sent 
-  if(Object.keys(query).length === 0 ){
+  // when no query is sent
+  if (Object.keys(query).length === 0) {
     const response = await vehicleModel.find({});
-    return res.status(200).send({data: response})
+    return res.status(200).send({ data: response });
   }
+
+  if (!name && (location || category)) {
+    const filter: any = {};
+
+    if (category) {
+
+      filter["categoryName"] = category;
+    }
+
+    if (location) {
+      filter.location = { $regex: `.*${location}.*`, $options: 'i' } 
+    }
+    console.log(filter)
+    try {
+      const response = await vehicleModel.find(filter);
+      return res.status(200).send({ data: response });
+    } catch (error: any) {
+      return res.status(400).send({ error: error.message });
+    }
+  }
+  // if name is given
 
   try {
     const agg = [
@@ -34,11 +55,9 @@ const searchVehicle = async (
 
     const response = await vehicleModel.aggregate(agg);
     return res.status(200).send({ data: response });
-  } catch (error:any) {
-
-      return res.status(400).send({error: error.message})
-
+  } catch (error: any) {
+    return res.status(400).send({ error: error.message });
   }
 };
 
-module.exports = searchVehicle
+module.exports = searchVehicle;
