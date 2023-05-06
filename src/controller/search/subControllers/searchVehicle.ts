@@ -20,14 +20,12 @@ const searchVehicle = async (
     const filter: any = {};
 
     if (category) {
-
       filter["categoryName"] = category;
     }
 
     if (location) {
-      filter.location = { $regex: `.*${location}.*`, $options: 'i' } 
+      filter.location = { $regex: `.*${location}.*`, $options: "i" };
     }
-    console.log(filter)
     try {
       const response = await vehicleModel.find(filter);
       return res.status(200).send({ data: response });
