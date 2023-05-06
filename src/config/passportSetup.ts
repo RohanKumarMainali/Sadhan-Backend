@@ -51,8 +51,9 @@ passport.use(
 
       // check if user exist or not
       const result = await userModel.find({ email: email });
-      let id=''
-      let status = 'unverified'
+      let id = "";
+      let status = "unverified";
+      let image = null;
 
       // user is new so let's save and add sign-in-method to google
       if (result.length === 0) {
@@ -64,25 +65,34 @@ passport.use(
             method: "google",
             email_verified: "verified",
             role: "user",
+            image: null,
             createdOn: new Date().toDateString(),
           });
 
           await response.save();
           id = response._id;
-
         } catch (error) {
-           console.log(error)
+          console.log(error);
         }
-      } 
-      else {
-          id = result[0]._id
+      } else {
+        id = result[0]._id;
 
-           console.log(result[0].role)
-          role = result[0].role
-          status = result[0].status
+        console.log(result[0].role);
+        role = result[0].role;
+        status = result[0].status;
+        image = result[0].image ? result[0].image : null;
       }
 
-      const user = {  id: id,email,status: status, firstName, lastName, role,method: 'google'};
+      const user = {
+        id: id,
+        email,
+        status: status,
+        firstName,
+        lastName,
+        role,
+        image,
+        method: "google",
+      };
       return done(null, user);
     }
   )

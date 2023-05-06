@@ -14,6 +14,7 @@ const userSchema = new mongoose.Schema({
     otp: 'string',
     kyc: Object,
     paymentInfo: Object,
+    image:Object,
     status: 'string',
     role: 'string',
     createdOn: Date,

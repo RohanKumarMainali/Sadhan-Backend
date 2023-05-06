@@ -16,14 +16,10 @@ const postReview = async (req: any, res: Response, next: NextFunction) => {
     userName: req.body.userName,
     review: req.body.review,
     rating: req.body.rating,
-    image: { public_id: "", url: "" },
+    image: req.body.image,
     createdOn: new Date().toString(),
   };
-
-
   try {
-
-    // post review logic
 
     const response = await new reviewModel(categoryObj);
 

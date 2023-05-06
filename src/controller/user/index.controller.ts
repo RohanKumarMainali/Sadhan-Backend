@@ -5,6 +5,7 @@ const CHANGE_PASSWORD = require("./subController/changePassword");
 const FORGOT_PASSWORD_EMAIL = require("./subController/forgotPasswordEmail");
 const GET_USER = require("./subController/getUser");
 const DELETE_USER = require("./subController/deleteUser");
+const POST_PROFILE_PICTURE = require("./subController/postProfilePicture");
 
 // const SIGNUP = require('./subController/Signup')
 
@@ -15,5 +16,6 @@ module.exports = {
   forgotPassword: FORGOT_PASSWORD,
   forgotPasswordEmail: FORGOT_PASSWORD_EMAIL,
   changePassword: CHANGE_PASSWORD,
-  deleteUser: DELETE_USER
+  deleteUser: DELETE_USER,
+  postProfilePicture: POST_PROFILE_PICTURE
 };

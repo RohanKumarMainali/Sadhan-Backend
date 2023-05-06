@@ -42,6 +42,7 @@ const login = async (req: any, res: any, next: NextFunction) => {
 
 
       const payload : any = data[0];
+      console.log(payload.image)
       let role = payload?.role === 'owner' ? 'owner' : 'user';
       const jwtPayload = {
         id: payload._id,
@@ -51,6 +52,7 @@ const login = async (req: any, res: any, next: NextFunction) => {
         role: role,
         status: payload.status,
         method: "custom",
+        image: payload.image ? payload.image : null
       };
       const { ACCESS_TOKEN, REFRESH_TOKEN } = await auth.GENERATE_JWT(
         jwtPayload
@@ -81,6 +83,7 @@ const login = async (req: any, res: any, next: NextFunction) => {
             lastName: data[0].lastName,
             role: role,
             method: 'custom',
+            image: payload.image ? payload.image : null,
           });
         });
       } catch (err) {
