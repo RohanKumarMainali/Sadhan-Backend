@@ -12,12 +12,12 @@ const searchVehicle = async (
   const query = req.query;
   // when no query is sent
   if (Object.keys(query).length === 0) {
-    const response = await vehicleModel.find({});
+    const response = await vehicleModel.find({status: "verified"});
     return res.status(200).send({ data: response });
   }
 
   if (!name && (location || category)) {
-    const filter: any = {};
+    const filter: any = {status: "verified"};
 
     if (category) {
       filter["categoryName"] = category;
@@ -48,6 +48,7 @@ const searchVehicle = async (
           },
         },
       },
+       { $match: { status: "verified" } },
       { $limit: 8 },
     ];
 
