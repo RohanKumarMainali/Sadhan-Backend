@@ -6,6 +6,7 @@ const deleteVehicle = require('../controller/vehicle/index.controller').deleteVe
 const updateVehicle = require('../controller/vehicle/index.controller').updateVehicle
 const getVehicleByUser = require('../controller/vehicle/index.controller').getVehicleByUser
 const getTopRatedVehicle = require('../controller/vehicle/index.controller').getTopRatedVehicle
+const getVerifiedVehicles = require('../controller/vehicle/index.controller').getVerifiedVehicles
 
 // manage
 
@@ -17,6 +18,7 @@ vehicleRoute.post('/postVehicle', postVehicle)
 vehicleRoute.get('/getVehicle', getVehicle)
 vehicleRoute.get('/getTopRatedVehicle', getTopRatedVehicle)
 vehicleRoute.get('/getVehicleByUser/:userId', getVehicleByUser)
+vehicleRoute.get('/getVerifiedVehicles', getVerifiedVehicles)
 vehicleRoute.get('/getVehicle/:id', getVehicle)
 vehicleRoute.delete('/deleteVehicle/:id', deleteVehicle)
 vehicleRoute.put('/updateVehicle/:id', updateVehicle)
