@@ -4,6 +4,8 @@ const User = require('./user.model')
 
 const vehicleModel = new mongoose.Schema({
     userId: {type: mongoose.Schema.Types.ObjectId, ref: User},
+    ownerName: String,
+    ownerEmail:String,
     name: String,
     price: String,
     model: String,

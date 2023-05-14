@@ -10,6 +10,8 @@ interface imageType {
 const postVehicle = async (req: any, res: Response, next: NextFunction) => {
   const {
     userId,
+    ownerEmail,
+    ownerName,
     name,
     seat,
     price,
@@ -21,6 +23,7 @@ const postVehicle = async (req: any, res: Response, next: NextFunction) => {
     categoryId,
     categoryName,
   } = req.body;
+
 
   try {
     // image -- process
@@ -97,6 +100,8 @@ const postVehicle = async (req: any, res: Response, next: NextFunction) => {
       userId: new mongoose.Types.ObjectId(userId),
       name,
       price,
+      ownerEmail: ownerEmail,
+      ownerName: ownerName,
       milage,
       seat,
       model,

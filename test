@@ -1,6 +1,0 @@
-Triple-slash reference _ `[typescript]`
-───────────────────────────────────────
-Triple-slash reference
-
-/// <reference path="$1" />
-$0
