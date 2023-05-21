@@ -142,7 +142,6 @@ const CREATE_BOOKING = async (req: Request, res: Response) => {
     await vehicle.save();
 
     // Render the ejs template and pass the user data to it
-    console.log(ownerName)
     
     const user = { name: userName, email: userEmail };
     const owner = { name: ownerName, email: ownerEmail };
@@ -155,8 +154,6 @@ const CREATE_BOOKING = async (req: Request, res: Response) => {
       endDate: endDate,
       amount: amount,
     };
-    console.log(userEmail)
-    console.log(ownerEmail)
     const ejsHtml = await ejs.renderFile(__dirname + "/bill.ejs", {
       user,owner , vehicleInfo
     });

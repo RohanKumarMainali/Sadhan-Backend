@@ -51,6 +51,7 @@ passport.use(
 
       // check if user exist or not
       const result = await userModel.find({ email: email });
+      console.log(result)
       let id = "";
       let status = "unverified";
       let image = null;
@@ -71,6 +72,8 @@ passport.use(
             },
             createdOn: new Date().toDateString(),
           });
+
+          console.log(response)
 
           await response.save();
           id = response._id;

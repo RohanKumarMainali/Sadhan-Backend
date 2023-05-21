@@ -182,7 +182,6 @@ const viewKycRequest = async (
 
     // get all user with status pending i.e their kyc needs to be checked
     const response = await userModel.find({ status: { $eq: "pending" } });
-    console.log(response);
     return res.status(200).send({ data: response });
   } catch (error: any) {
     return res.status(400).send({ message: error.message });
@@ -195,7 +194,6 @@ const viewAllKyc = async (req: Request, res: Response, next: NextFunction) => {
     const response = await userModel.find({
       $or: [{ status: "rejected" }, { status: "verified" }],
     });
-    console.log(response);
     return res.status(200).send({ data: response });
   } catch (error: any) {
     return res.status(400).send({ message: error.message });
