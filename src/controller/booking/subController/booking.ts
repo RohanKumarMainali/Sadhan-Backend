@@ -137,10 +137,6 @@ const CREATE_BOOKING = async (req: Request, res: Response) => {
     // Save the booking to the database
     await booking.save();
 
-    // Update the availability status of the vehicle
-    vehicle.available = false;
-    await vehicle.save();
-
     // Render the ejs template and pass the user data to it
     
     const user = { name: userName, email: userEmail };

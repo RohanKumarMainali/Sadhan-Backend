@@ -121,7 +121,7 @@ const postVehicle = async (req: any, res: Response, next: NextFunction) => {
         public_id: bluebookImageResponse.public_id,
         url: bluebookImageResponse.secure_url,
       },
-      status: 'pending',
+      status: "pending",
     });
 
     await response.save();
