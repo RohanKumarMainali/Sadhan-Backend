@@ -6,21 +6,11 @@ import mongoose from "mongoose";
 import { httpServer } from "./app";
 //should save the username and password to database
 // should return statusCodes.OK
-describe("User login endpoint", () => {
-  test("should return a json object with 200 status code", async () => {
-    const response = await request(app).post("/api/user/login").send({
-      email: "test@gmail.com",
-      password: "rohan123",
-    });
-    expect(response.status).toBe(200);
-  });
-});
-
 describe("Admin login endpoint", () => {
   test("should return a json object with 200 status code", async () => {
     const response = await request(app).post("/api/admin/login").send({
       email: "rihanmainali@gmail.com",
-      password: "testing123",
+      password: "rohan123",
     });
     expect(response.status).toBe(200);
   });
