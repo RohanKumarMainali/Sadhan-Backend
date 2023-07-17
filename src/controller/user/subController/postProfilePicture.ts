@@ -23,9 +23,6 @@ const postProfilePicture = async (
   try {
     const image = req.files.image;
     const id = req.body.id;
-
-    console.log(image);
-
     const imageResponse = await cloudinary.uploader.upload(
       image?.tempFilePath,
       { folder: "profile_image" },
@@ -44,9 +41,6 @@ const postProfilePicture = async (
     await response.save();
 
     const data : any = await userModel.findById(id);
-
-    console.log('image')
-    console.log(data)
     const jwtPayload = {
       id: data._id,
       firstName: data.firstName,

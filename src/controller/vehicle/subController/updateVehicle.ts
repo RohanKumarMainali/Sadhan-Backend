@@ -33,46 +33,25 @@ const updateVehicle = async (req: any, res: Response, next: NextFunction) => {
   }
 
   // for images
-  let imageResults = undefined;
-  const carImages = req?.files?.carImages;
-  let results = [];
-
   try {
     // for array image
     // image -- process
     const images = req?.files?.image;
-    console.log("images " + images);
-
     // for multiple images
     let results: any = [];
     let uploadPromises: Promise<any>[];
     if (images !== undefined) {
       if (Array.isArray(images)) {
         uploadPromises = images.map(async (image: any) => {
-          console.log("image: ", image);
-          const result = await cloudinary.uploader.upload(
-            image?.tempFilePath,
-            { folder: "car_images" },
-            function (err: any, success: any) {
-              if (err) {
-                console.log(err);
-              }
-            }
-          );
+          const result = await cloudinary.uploader.upload(image?.tempFilePath, {
+            folder: "car_images",
+          });
           return { public_id: result.public_id, url: result.secure_url };
         });
       } else {
         uploadPromises = [
           cloudinary.uploader
-            .upload(
-              images?.tempFilePath,
-              { folder: "car_images" },
-              function (err: any, success: any) {
-                if (err) {
-                  console.log(err);
-                }
-              }
-            )
+            .upload(images?.tempFilePath, { folder: "car_images" })
             .then((result: any) => ({
               public_id: result.public_id,
               url: result.secure_url,
@@ -131,10 +110,7 @@ const updateVehicle = async (req: any, res: Response, next: NextFunction) => {
         url: insuranceImageResponse.secure_url,
       };
     }
-    console.log(updateInfo);
-
     const response = await vehicleModel.findByIdAndUpdate(id, updateInfo);
-
     await response.save();
 
     return res.status(200).send({ message: "vehicle updated successfully!" });

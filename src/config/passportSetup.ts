@@ -14,21 +14,6 @@ passport.deserializeUser(function (user: any, done: any) {
   done(null, user);
 });
 
-type name = {
-  givenName: string;
-  familyName: string;
-};
-
-type email = {
-  value: string;
-};
-
-interface profile {
-  emails: Array<email>;
-  name: name;
-  id: string;
-  role: string;
-}
 passport.use(
   new googleStrategy(
     {
@@ -38,9 +23,6 @@ passport.use(
       passReqToCallback: true,
     },
     async (
-      request: any,
-      accessToken: String,
-      refreshToken: String,
       profile: any,
       done: any
     ) => {
@@ -51,7 +33,6 @@ passport.use(
 
       // check if user exist or not
       const result = await userModel.find({ email: email });
-      console.log(result)
       let id = "";
       let status = "unverified";
       let image = null;
@@ -72,8 +53,6 @@ passport.use(
             },
             createdOn: new Date().toDateString(),
           });
-
-          console.log(response)
 
           await response.save();
           id = response._id;

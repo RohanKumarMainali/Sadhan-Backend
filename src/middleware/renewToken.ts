@@ -31,11 +31,9 @@ const renewToken = async () => {
             const details = response.data.payload;
             localStorage.setItem("user", JSON.stringify(response.data.payload));
 
-            console.log(response.data.payload)
             return details.role;
         }
     } catch (error: any) {
-        console.log(error.message)
         return "";
     }
 };
@@ -43,7 +41,6 @@ const renewToken = async () => {
 const renewTokenInterval = async () => {
 
     await renewToken();
-    console.log('I am running renew token')
 
 
 };

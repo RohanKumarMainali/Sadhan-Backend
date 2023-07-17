@@ -28,8 +28,6 @@ const postVehicle = async (req: any, res: Response, next: NextFunction) => {
   try {
     // image -- process
     const images = req?.files?.image;
-    console.log("images " + images);
-
     const insuranceImage = req.files.insuranceImage;
     const bluebookImage = req.files.bluebookImage;
 
@@ -39,7 +37,6 @@ const postVehicle = async (req: any, res: Response, next: NextFunction) => {
       let uploadPromises: Promise<any>[];
       if (Array.isArray(images)) {
         uploadPromises = images.map(async (image: any) => {
-          console.log("image: ", image);
           const result = await cloudinary.uploader.upload(
             image.tempFilePath,
             { folder: "car_images" },
@@ -70,7 +67,6 @@ const postVehicle = async (req: any, res: Response, next: NextFunction) => {
         ];
       }
       results = await Promise.all(uploadPromises);
-      console.log("multiple image " + JSON.stringify(results));
     } catch (error: any) {
       console.log(error);
     }
