@@ -9,7 +9,6 @@ const forgotPasswordEmail = async (req: Request, res: Response) => {
     try {
       // try finding the user with the email
       let user = await userModel.findOne({ email: email });
-      console.log(user)
       if(!user) user = await adminModel.findOne({email:email})
       if (user) {
         // generate token

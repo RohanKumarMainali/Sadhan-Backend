@@ -7,8 +7,6 @@ const changePassword = async (req: Request, res: Response) => {
   const { password, newPassword, confirmPassword, id } = req.body;
   try {
     const response = await userModel.findById(id);
-    console.log("res" + response);
-
     const isMatched = await response.matchPassword(password);
     if (!isMatched)
       return res

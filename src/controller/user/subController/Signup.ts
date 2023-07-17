@@ -49,7 +49,6 @@ const SIGNUP = async (req: Request, res: Response) => {
       }
     })
     .catch((err: any) => {
-      console.log("500 SERVER ERROR !!");
     });
 };
 

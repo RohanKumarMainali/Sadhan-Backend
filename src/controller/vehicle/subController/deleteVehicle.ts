@@ -26,8 +26,6 @@ const deleteVehicle = async (
             const response = await cloudinary.uploader.destroy(image.public_id, function(err: any, success: any) { if (err) console.log(err) })
             return response
         })
-
-        console.log(vehicle)
         const deleteResponse = await vehicleModel.deleteOne({_id: id});
         return res
             .status(200)

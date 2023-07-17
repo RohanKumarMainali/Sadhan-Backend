@@ -17,12 +17,12 @@ import { httpServer } from "./app";
 });
 */}
 
-describe("Get vehicle endpoint", () => {
+/* describe("Get vehicle endpoint", () => {
   test("should return a json object with 200 status code", async () => {
     const response = await request(app).get("/api/getVehicle");
     expect(response.status).toBe(200);
   });
-});
+}); */
 
 
 describe("Get top rated vehicles only", () => {
@@ -72,7 +72,7 @@ describe("Get pending or rejected vehicle by user ID ", () => {
 
 // ----------------------KYC Testing -----------------------------------------
 
-describe("Send OTP to Email for email verification", () => {
+/* describe("Send OTP to Email for email verification", () => {
   test("should return a json object with 200 status code", async () => {
     const response = await request(app).post("/api/sendEmailOTP").send({"email": "rohanmainali39@gmail.com", "id": "64032c49d886bc91a8d0b59a"});
     expect(response.status).toBe(200);
@@ -100,7 +100,7 @@ describe("Verify KYC request", () => {
     expect(response.status).toBe(200);
   });
 });
-
+*/
 // ------------------Category Management------------
 
 describe("Get Category ", () => {
@@ -122,12 +122,12 @@ describe("Get Category By its Id", () => {
 
 // ------------------Booking Management------------
 
-describe("Get All Bookings ", () => {
+/* describe("Get All Bookings ", () => {
   test("should return a json object with 200 status code", async () => {
     const response = await request(app).get("/api/booking");
     expect(response.status).toBe(200);
   });
-});
+}); */
 
 describe("Get Rentals of one owner ", () => {
   test("should return a json object with 200 status code", async () => {

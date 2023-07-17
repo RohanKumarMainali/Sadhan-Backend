@@ -29,8 +29,6 @@ const updateCategory = async (req: any, res: Response, next: NextFunction) => {
         url: imageResponse.secure_url,
       };
     }
-
-    console.log(updateInfo);
     const response = await categoryModel.findByIdAndUpdate(id, updateInfo);
     await response.save();
 

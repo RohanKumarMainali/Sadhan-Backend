@@ -19,21 +19,11 @@ const postKYC = async (req: any, res: Response, next: NextFunction) => {
     const citizenshipImageFrontResponse = await cloudinary.uploader.upload(
       citizenshipImageFront.tempFilePath,
       { folder: "citizenship_images" },
-      function (err: any, success: any) {
-        if (err) {
-          console.log(err);
-        }
-      }
     );
 
     const citizenshipImageBackResponse = await cloudinary.uploader.upload(
       citizenshipImageBack.tempFilePath,
       { folder: "citizenship_images" },
-      function (err: any, success: any) {
-        if (err) {
-          console.log(err);
-        }
-      }
     );
 
     const drivingLicenseImageResponse = await cloudinary.uploader.upload(

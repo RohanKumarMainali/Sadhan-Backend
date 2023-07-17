@@ -20,7 +20,6 @@ const forgotPassword = async (req: Request, res: Response) => {
                     process.env.ACCESS_TOKEN_KEY
                 );
 
-                console.log(verifyToken);
                 if (verifyToken) {
                     let response = await userModel.findByIdAndUpdate(id, {
                         password: password

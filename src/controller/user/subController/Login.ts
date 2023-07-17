@@ -42,7 +42,6 @@ const login = async (req: any, res: any, next: NextFunction) => {
 
 
       const payload : any = data[0];
-      console.log(payload.image)
       let role = payload?.role === 'owner' ? 'owner' : 'user';
       const jwtPayload = {
         id: payload._id,
