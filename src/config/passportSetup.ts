@@ -14,15 +14,33 @@ passport.deserializeUser(function (user: any, done: any) {
   done(null, user);
 });
 
+type name = {
+  givenName: string;
+  familyName: string;
+};
+
+type email = {
+  value: string;
+};
+
+interface profile {
+  emails: Array<email>;
+  name: name;
+  id: string;
+  role: string;
+}
 passport.use(
   new googleStrategy(
     {
       clientID: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET,
-      callbackURL: "http://localhost:5000/api/google/callback",
+      callbackURL: "https://sadhan-backend.onrender.com/api/google/callback",
       passReqToCallback: true,
     },
     async (
+      request: any,
+      accessToken: String,
+      refreshToken: String,
       profile: any,
       done: any
     ) => {
@@ -33,6 +51,7 @@ passport.use(
 
       // check if user exist or not
       const result = await userModel.find({ email: email });
+      console.log(result);
       let id = "";
       let status = "unverified";
       let image = null;
@@ -48,11 +67,13 @@ passport.use(
             email_verified: "verified",
             role: "user",
             image: {
-                "public_id": "profile_image/qr2sox9whiduxmljgxyu",
-                "url": "https://res.cloudinary.com/degtbdhfn/image/upload/v1683361106/profile_image/qr2sox9whiduxmljgxyu.png"
+              public_id: "profile_image/qr2sox9whiduxmljgxyu",
+              url: "https://res.cloudinary.com/degtbdhfn/image/upload/v1683361106/profile_image/qr2sox9whiduxmljgxyu.png",
             },
             createdOn: new Date().toDateString(),
           });
+
+          console.log(response);
 
           await response.save();
           id = response._id;
