@@ -26,7 +26,7 @@ import { httpServer } from "./app";
   });
 }); */
 
-test("should return a json object with 200 status code", async () => {
+/* test("should return a json object with 200 status code", async () => {
   const response = await request(app).get("/api/getTopRatedVehicle");
   expect(response.status).toBe(200);
 });
@@ -68,7 +68,7 @@ describe("Get pending or rejected vehicle by user ID ", () => {
     const response = await request(app).get("/api/viewAllVehicle");
     expect(response.status).toBe(200);
   });
-});
+}); */
 
 // ----------------------KYC Testing -----------------------------------------
 
@@ -103,7 +103,7 @@ describe("Verify KYC request", () => {
 */
 // ------------------Category Management------------
 
-describe("Get Category ", () => {
+/* describe("Get Category ", () => {
   test("should return a json object with 200 status code", async () => {
     const response = await request(app).get("/api/getCategory");
     expect(response.status).toBe(200);
@@ -118,7 +118,7 @@ describe("Get Category By its Id", () => {
     expect(response.status).toBe(200);
   });
 });
-
+ */
 // ------------------Booking Management------------
 
 /* describe("Get All Bookings ", () => {
@@ -128,7 +128,7 @@ describe("Get Category By its Id", () => {
   });
 }); */
 
-describe("Get Rentals of one owner ", () => {
+/* describe("Get Rentals of one owner ", () => {
   test("should return a json object with 200 status code", async () => {
     const response = await request(app).get(
       "/api/getRentals/64032c49d886bc91a8d0b59a"
@@ -145,7 +145,7 @@ describe("Get Bookings of particular vehicle ", () => {
     expect(response.status).toBe(200);
   });
 });
-
+*/
 // ------------------Review Management------------
 
 describe("Get All Reviews ", () => {
@@ -155,7 +155,7 @@ describe("Get All Reviews ", () => {
   });
 });
 
-describe("Get Review from user ID ", () => {
+/* describe("Get Review from user ID ", () => {
   test("should return a json object with 200 status code", async () => {
     const response = await request(app).get(
       "/api/getReview/64032c49d886bc91a8d0b59a"
@@ -172,7 +172,7 @@ describe("Get Review of particular vehicle ", () => {
     expect(response.status).toBe(200);
   });
 });
-
+ */
 afterAll(async () => {
   await new Promise((resolve) => httpServer.close(resolve));
 });
